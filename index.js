@@ -1,6 +1,7 @@
 Discord = require('discord.js');
 fs = require('fs');
 const { discordToken } = require('./tokens.json');
+const { owners } = require('./config.json');
 
 // Initialize client
 global.client = new Discord.Client({
