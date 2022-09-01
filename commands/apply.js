@@ -14,7 +14,7 @@ Part 2:
 7) Can you teach strats that you don't use?
 8) Please put any additional comments below.
 
-Please press the button below when you are ready to start.`;
+Please press the button below when you are ready to start. Note that if you have previously submitted an application, this will update your previous one.`;
 
 module.exports = {
     data: new SlashCommandBuilder()

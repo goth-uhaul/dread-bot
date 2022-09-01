@@ -44,6 +44,7 @@ module.exports = {
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
             let form = wipForms.find(x => x.id === interaction.user.id);
+
             if (!form) {
                 const messageContent = 'The form has expired! Please use `/apply` and start again. So you don\'t lose them, here were the responses you just submitted:\n' +
                 '\nStrength: ' + interaction.fields.getTextInputValue('teacherAppStrength') +
@@ -57,7 +58,28 @@ module.exports = {
             else {
                 removeWipForm(form, form.timeout);
 
-                let response = await TeacherResponses.create({
+                let response = await (TeacherResponses.findOne({ where: { userId: interaction.user.id } }));
+                let updated = false;
+                
+                if (response) {
+                    await TeacherResponses.update({
+                        srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
+                        positions: '',
+                        timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
+                        hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
+                        strength: interaction.fields.getTextInputValue('teacherAppStrength'),
+                        weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
+                        backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
+                        otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
+                        comments: interaction.fields.getTextInputValue('teacherAppComments'),
+                        upVotes: 0,
+                        downVotes: 0,
+                        status: 'Pending'
+                    }, { where: { userId: interaction.user.id } });
+
+                    updated = true;
+                }
+                else response = await TeacherResponses.create({
                     userId: interaction.user.id,
                     discordName: interaction.user.username,
                     srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
@@ -87,7 +109,7 @@ module.exports = {
                 '\nComments: ' + response.comments;
                 
                 interaction.reply('Response received! Here were your answers:\n' + responseText).then(resolve()).catch(e => reject(e));
-                client.channels.fetch(applicationChannel).then(c => c.send(responseText));
+                client.channels.fetch(applicationChannel).then(c => c.send((updated ? 'Updated Application!\n' : 'New Application!\n') + responseText));
             }
         });
     }
