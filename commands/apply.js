@@ -20,7 +20,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('apply')
 		.setDescription('Apply to be a bootcamp teacher'),
-	category: 'discord',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			const button = new ActionRowBuilder().addComponents(client.buttons.get('showModalConfirm').button('teacherApp1'));

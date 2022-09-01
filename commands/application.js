@@ -8,7 +8,6 @@ module.exports = {
             option.setName('user')
                 .setDescription('User\'s ID')
                 .setRequired(true)),
-	category: 'discord',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			const response = await (TeacherResponses.findOne({ where: { userId: interaction.options.getString('user') } }));

@@ -14,7 +14,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('botinfo')
         .setDescription('Gets info about the bot'),
-    category: 'info',
     execute(interaction) {
         return new Promise (async (resolve, reject) => {
             let embed = new EmbedBuilder()

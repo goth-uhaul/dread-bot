@@ -18,7 +18,6 @@ module.exports = {
 			option.setName('no-return')
 				.setDescription('Don\'t return value')),
 	ownerOnly: true,
-	category: 'owner',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			let shouldReturn = !!interaction.options.getBoolean('return');

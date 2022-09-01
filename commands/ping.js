@@ -4,7 +4,6 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Checks the bot\'s ping'),
-    category: 'info',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
             const time = Date.now();
