@@ -44,39 +44,51 @@ module.exports = {
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
             let form = wipForms.find(x => x.id === interaction.user.id);
-            removeWipForm(form, form.timeout);
+            if (!form) {
+                const messageContent = 'The form has expired! Please use `/apply` and start again. So you don\'t lose them, here were the responses you just submitted:\n' +
+                '\nStrength: ' + interaction.fields.getTextInputValue('teacherAppStrength') +
+                '\nWeakness: ' + interaction.fields.getTextInputValue('teacherAppWeakness') +
+                '\nBackup Strats: ' + interaction.fields.getTextInputValue('teacherAppBackupStrats') +
+                '\nOther Strats: ' + interaction.fields.getTextInputValue('teacherAppOtherStrats') +
+                '\nComments: ' + interaction.fields.getTextInputValue('teacherAppComments');
 
-            let response = await TeacherResponses.create({
-                userId: interaction.user.id,
-                discordName: interaction.user.username,
-                srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
-                positions: '',
-                timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
-                hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
-                strength: interaction.fields.getTextInputValue('teacherAppStrength'),
-                weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
-                backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
-                otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
-                comments: interaction.fields.getTextInputValue('teacherAppComments'),
-                upVotes: 0,
-                downVotes: 0,
-                status: 'Pending'
-            });
+                interaction.reply({ content: messageContent, ephemeral: true });
+            }
+            else {
+                removeWipForm(form, form.timeout);
 
-            const responseText = '\nUser ID: ' + response.userId +
-            '\nDiscord Username: ' + response.discordName +
-            '\nSRC Username: ' + response.srcName +
-            '\nPositions: ' + response.positions +
-            '\nTime Running: ' + response.timeRunning +
-            '\nHardware: ' + response.hardware +
-            '\nStrength: ' + response.strength +
-            '\nWeaknesss: ' + response.weakness +
-            '\nBackup Strats: ' + response.backupStrats +
-            '\nOther Strats: ' + response.otherStrats +
-            '\nComments: ' + response.comments;
-            
-            interaction.reply('Response received! Here were your answers:\n' + responseText).then(resolve()).catch(e => reject(e));
-            client.channels.fetch(applicationChannel).then(c => c.send(responseText));
+                let response = await TeacherResponses.create({
+                    userId: interaction.user.id,
+                    discordName: interaction.user.username,
+                    srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
+                    positions: '',
+                    timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
+                    hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
+                    strength: interaction.fields.getTextInputValue('teacherAppStrength'),
+                    weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
+                    backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
+                    otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
+                    comments: interaction.fields.getTextInputValue('teacherAppComments'),
+                    upVotes: 0,
+                    downVotes: 0,
+                    status: 'Pending'
+                });
+
+                const responseText = '\nUser ID: ' + response.userId +
+                '\nDiscord Username: ' + response.discordName +
+                '\nSRC Username: ' + response.srcName +
+                '\nPositions: ' + response.positions +
+                '\nTime Running: ' + response.timeRunning +
+                '\nHardware: ' + response.hardware +
+                '\nStrength: ' + response.strength +
+                '\nWeaknesss: ' + response.weakness +
+                '\nBackup Strats: ' + response.backupStrats +
+                '\nOther Strats: ' + response.otherStrats +
+                '\nComments: ' + response.comments;
+                
+                interaction.reply('Response received! Here were your answers:\n' + responseText).then(resolve()).catch(e => reject(e));
+                client.channels.fetch(applicationChannel).then(c => c.send(responseText));
+            }
         });
     }
 };
