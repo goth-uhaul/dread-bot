@@ -64,7 +64,7 @@ module.exports = {
                 if (response) {
                     await TeacherResponses.update({
                         srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
-                        positions: '',
+                        positions: [],
                         timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
                         hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
                         strength: interaction.fields.getTextInputValue('teacherAppStrength'),
@@ -72,8 +72,8 @@ module.exports = {
                         backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
                         otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
                         comments: interaction.fields.getTextInputValue('teacherAppComments'),
-                        upVotes: 0,
-                        downVotes: 0,
+                        upvotes: [],
+                        downvotes: [],
                         status: 'Pending'
                     }, { where: { userId: interaction.user.id } });
 
@@ -91,8 +91,8 @@ module.exports = {
                     backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
                     otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
                     comments: interaction.fields.getTextInputValue('teacherAppComments'),
-                    upVotes: 0,
-                    downVotes: 0,
+                    upvotes: '',
+                    downvotes: '',
                     status: 'Pending'
                 });
 
@@ -107,9 +107,14 @@ module.exports = {
                 '\nBackup Strats: ' + response.backupStrats +
                 '\nOther Strats: ' + response.otherStrats +
                 '\nComments: ' + response.comments;
+
+                const upvoteButton = client.buttons.get('applicationUpvote').button(response.userId);
+                const downvoteButton = client.buttons.get('applicationDownvote').button(response.userId);
+
+                const voteButtons = new ActionRowBuilder().addComponents(upvoteButton, downvoteButton);
                 
                 interaction.reply('Response received! Here were your answers:\n' + responseText).then(resolve()).catch(e => reject(e));
-                client.channels.fetch(applicationChannel).then(c => c.send((updated ? 'Updated Application!\n' : 'New Application!\n') + responseText));
+                client.channels.fetch(applicationChannel).then(c => c.send({ content: (updated ? 'Updated Application!\n' : 'New Application!\n') + responseText, components: [voteButtons] }));
             }
         });
     }

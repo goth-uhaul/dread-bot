@@ -23,7 +23,9 @@ module.exports = {
             Weaknesss: ${response.weakness}
             Backup Strats: ${response.backupStrats}
             Other Strats: ${response.otherStrats}
-            Comments: ${response.comments}`).then(resolve()).catch(e => reject(e));
+            Comments: ${response.comments}
+            Upvotes: ${response.upvotes}
+            Downvotes: ${response.downvotes}`).then(resolve()).catch(e => reject(e));
 		});
 	}
 };

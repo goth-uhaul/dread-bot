@@ -29,8 +29,8 @@ global.TeacherResponses = sequelize.define('teacherResponses', {
 	backupStrats: Sequelize.TEXT,
 	otherStrats: Sequelize.TEXT,
 	comments: Sequelize.TEXT,
-	upVotes: Sequelize.STRING,
-	downVotes: Sequelize.STRING,
+	upvotes: Sequelize.TEXT,
+	downvotes: Sequelize.TEXT,
 	status: Sequelize.STRING
 });
 
