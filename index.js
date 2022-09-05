@@ -82,6 +82,16 @@ for (const file of buttonFiles) {
     client.buttons.set(file.slice(0, -3), button);
 }
 
+// Initialize local select menus
+client.selectMenus = new Discord.Collection();
+let selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWith('.js'));
+
+// Fill local select menus
+for (const file of selectMenuFiles) {
+    const selectMenu = require(`./selectMenus/${file}`);
+    client.selectMenus.set(file.slice(0, -3), selectMenu);
+}
+
 // Interaction handler
 client.on('interactionCreate', async interaction => {
 	// Slash commands
@@ -112,13 +122,25 @@ client.on('interactionCreate', async interaction => {
 		});
 	}
 	// Button presses
-	else if (interaction.type === InteractionType.MessageComponent) {
+	else if (interaction.isButton()) {
 		// Get local equivalent
 		let pos = interaction.customId.indexOf('_');
 		const button = client.buttons.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command
 		button.onPressed(interaction)
+		.catch(error => {
+			console.error(error);
+			interaction.reply('There was an error!');
+		});
+	}
+	// selectMenu submits
+	else if (interaction.isSelectMenu()) {
+		// Get local equivalent
+		const selectMenu = client.selectMenus.get(interaction.customId);
+
+		// Execute command
+		selectMenu.onSelection(interaction)
 		.catch(error => {
 			console.error(error);
 			interaction.reply('There was an error!');
