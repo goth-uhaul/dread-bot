@@ -1,5 +1,5 @@
 const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require("discord.js");
-const { applicationChannel } = require('../config.json');
+const { applicationChannel, positions } = require('../config.json');
 
 let strengthInput = new TextInputBuilder()
     .setCustomId('teacherAppStrength')
@@ -36,6 +36,8 @@ const backupStratsActionRow = new ActionRowBuilder().addComponents(backupStratsI
 const otherStratsActionRow = new ActionRowBuilder().addComponents(otherStratsInput);
 const commentsActionRow = new ActionRowBuilder().addComponents(commentsInput);
 
+const getPositionName = (id) => positions.find(p => p.value === id).label;
+
 module.exports = {
     modal: new ModalBuilder()
         .setCustomId('teacherApp2')
@@ -63,17 +65,17 @@ module.exports = {
                 
                 if (response) {
                     await TeacherResponses.update({
-                        srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
-                        positions: [],
-                        timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
-                        hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
+                        discordName: interaction.user.username,
+                        srcName: form.questions.getTextInputValue('teacherAppSrcName'),
+                        positions: form.positions.map(p => getPositionName(p)).join(','),
+                        timeRunning: form.questions.getTextInputValue('teacherAppHardware'),
                         strength: interaction.fields.getTextInputValue('teacherAppStrength'),
                         weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
                         backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
                         otherStrats: interaction.fields.getTextInputValue('teacherAppOtherStrats'),
                         comments: interaction.fields.getTextInputValue('teacherAppComments'),
-                        upvotes: [],
-                        downvotes: [],
+                        upvotes: '',
+                        downvotes: '',
                         status: 'Pending'
                     }, { where: { userId: interaction.user.id } });
 
@@ -82,10 +84,10 @@ module.exports = {
                 else response = await TeacherResponses.create({
                     userId: interaction.user.id,
                     discordName: interaction.user.username,
-                    srcName: form.form.fields.getTextInputValue('teacherAppSrcName'),
-                    positions: '',
-                    timeRunning: form.form.fields.getTextInputValue('teacherAppTimeRunning'),
-                    hardware: form.form.fields.getTextInputValue('teacherAppHardware'),
+                    srcName: form.questions.getTextInputValue('teacherAppSrcName'),
+                    positions: form.positions.map(p => getPositionName(p)).join(','),
+                    timeRunning: form.questions.getTextInputValue('teacherAppTimeRunning'),
+                    hardware: form.questions.getTextInputValue('teacherAppHardware'),
                     strength: interaction.fields.getTextInputValue('teacherAppStrength'),
                     weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
                     backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),

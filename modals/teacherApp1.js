@@ -29,8 +29,18 @@ module.exports = {
         .addComponents(srcNameActionRow, timeRunningActionRow, hardwareActionRow),
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
-            if (!wipForms.find(x => x.id === interaction.user.id)) {
-                console.log(addWipForm(interaction));
+            let form = wipForms.find(x => x.id === interaction.user.id);
+
+            if (!form) {
+                const messageContent = 'The form has expired! Please use `/apply` and start again. So you don\'t lose them, here were the responses you just submitted:\n' +
+                '\nSRC Username: ' + interaction.fields.getTextInputValue('teacherAppSrcName') +
+                '\nTime Running: ' + interaction.fields.getTextInputValue('teacherAppTimeRunning') +
+                '\nHardware: ' + interaction.fields.getTextInputValue('teacherAppHardware');
+
+                interaction.reply({ content: messageContent, ephemeral: true });
+            }
+            else {
+                wipForms.find(form => form.id === interaction.user.id).questions = interaction.fields;
 
                 const messageContent = 'Here are your responses so far:\n' +
                 '\nSRC Username: ' + interaction.fields.getTextInputValue('teacherAppSrcName') +

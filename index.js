@@ -42,8 +42,14 @@ global.removeWipForm = (form, timeout) => {
 	return wipForms.splice(wipForms.indexOf(form), 1);
 }
 
-global.addWipForm = (interaction) => {
-	if (!wipForms.find(x => x.id === interaction.user.id)) return wipForms.push({ id: interaction.user.id, form: interaction, timeout: setTimeout(() => removeWipForm(this), 900000) });
+global.addWipForm = (form) => {
+	let existingForm = wipForms.findIndex(x => x.id === form.id);
+	form.timeout = setTimeout(() => removeWipForm(this), 900000);
+
+	if (existingForm === -1) {
+		return wipForms.push(form);
+	}
+	else wipForms[existingForm] = form;
 }
 
 // Initialize client
