@@ -1,4 +1,5 @@
 const { ButtonBuilder, ButtonStyle } = require("discord.js");
+const { TeacherResponses } = require('../databases/dbObjects.js');
 
 module.exports = {
     button: (id) => new ButtonBuilder()

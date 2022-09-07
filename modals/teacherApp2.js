@@ -1,5 +1,6 @@
 const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require("discord.js");
 const { applicationChannel, positions } = require('../config.json');
+const { TeacherResponses } = require('../databases/dbObjects.js');
 
 let strengthInput = new TextInputBuilder()
     .setCustomId('teacherAppStrength')

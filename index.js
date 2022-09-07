@@ -1,38 +1,9 @@
 Discord = require('discord.js');
 const { InteractionType } = require('discord.js');
 fs = require('fs');
-const Sequelize = require('sequelize');
 const { discordToken } = require('./tokens.json');
 const { owners } = require('./config.json');
-
-// Initialize sequelize
-let sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	storage: 'database.sqlite'
-});
-
-// Create responses model
-global.TeacherResponses = sequelize.define('teacherResponses', {
-	userId: {
-		type: Sequelize.STRING,
-		unique: true
-	},
-	discordName: Sequelize.STRING,
-	srcName: Sequelize.STRING,
-	positions: Sequelize.STRING,
-	timeRunning: Sequelize.STRING,
-	hardware: Sequelize.STRING,
-	strength: Sequelize.TEXT,
-	weakness: Sequelize.TEXT,
-	backupStrats: Sequelize.TEXT,
-	otherStrats: Sequelize.TEXT,
-	comments: Sequelize.TEXT,
-	upvotes: Sequelize.TEXT,
-	downvotes: Sequelize.TEXT,
-	status: Sequelize.STRING
-});
+const { TeacherResponses } = require('./databases/dbObjects.js');
 
 // Temp storage for 2 part forms
 global.wipForms = [];
@@ -156,7 +127,6 @@ client.on('interactionCreate', async interaction => {
 
 // Log on successful login
 client.once('ready', () => {
-	TeacherResponses.sync({ force: true });
 	console.log('Ready!');
 });
 
