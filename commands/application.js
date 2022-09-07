@@ -12,6 +12,7 @@ module.exports = {
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			const response = await (TeacherResponses.findOne({ where: { userId: interaction.options.getString('user') } }));
+            if (!response) return interaction.reply('No application found!');
 
             interaction.reply(`Application found!
             User ID: ${response.userId}
