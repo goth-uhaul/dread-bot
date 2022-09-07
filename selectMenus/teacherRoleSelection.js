@@ -10,6 +10,7 @@ module.exports = {
         .addOptions(getRolesOptions())
         .setMinValues(1)
         .setMaxValues(8),
+    component: 'bootcamp',
     onSelection: (interaction) => {
         return new Promise(async (resolve, reject) => {
             addWipForm({ id: interaction.user.id, positions: interaction.values });

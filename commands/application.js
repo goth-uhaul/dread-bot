@@ -9,6 +9,7 @@ module.exports = {
             option.setName('user')
                 .setDescription('User\'s ID')
                 .setRequired(true)),
+    component: 'bootcamp',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			const response = await (TeacherResponses.findOne({ where: { userId: interaction.options.getString('user') } }));

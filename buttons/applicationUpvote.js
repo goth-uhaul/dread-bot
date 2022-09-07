@@ -6,6 +6,7 @@ module.exports = {
         .setCustomId('applicationUpvote_' + id)
         .setLabel('Upvote')
         .setStyle(ButtonStyle.Primary),
+    component: 'bootcamp',
     onPressed: (interaction) => {
         return new Promise(async (resolve, reject) => {
             let id = interaction.customId.slice(18);

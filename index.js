@@ -2,8 +2,7 @@ Discord = require('discord.js');
 const { InteractionType } = require('discord.js');
 fs = require('fs');
 const { discordToken } = require('./tokens.json');
-const { owners } = require('./config.json');
-const { TeacherResponses } = require('./databases/dbObjects.js');
+const { owners, enabledComponents } = require('./config.json');
 
 // Temp storage for 2 part forms
 global.wipForms = [];
@@ -46,7 +45,8 @@ let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'))
 // Fill local modals
 for (const file of modalFiles) {
     const modal = require(`./modals/${file}`);
-    client.modals.set(modal.modal.data.custom_id, modal);
+    if (enabledComponents.includes(modal.component)) client.modals.set(modal.modal.data.custom_id, modal);
+	else delete modal;
 }
 
 // Initialize local buttons
@@ -56,7 +56,8 @@ let buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'
 // Fill local buttons
 for (const file of buttonFiles) {
     const button = require(`./buttons/${file}`);
-    client.buttons.set(file.slice(0, -3), button);
+    if (enabledComponents.includes(button.component)) client.buttons.set(file.slice(0, -3), button);
+	else delete button;
 }
 
 // Initialize local select menus
@@ -66,7 +67,8 @@ let selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWi
 // Fill local select menus
 for (const file of selectMenuFiles) {
     const selectMenu = require(`./selectMenus/${file}`);
-    client.selectMenus.set(file.slice(0, -3), selectMenu);
+    if (enabledComponents.includes(selectMenu.component)) client.selectMenus.set(file.slice(0, -3), selectMenu);
+	else delete selectMenu;
 }
 
 // Interaction handler

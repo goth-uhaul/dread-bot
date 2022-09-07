@@ -11,6 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('verify')
         .setDescription('Verify yourself on the wiki'),
+    component: 'wiki',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
             await interaction.guild.roles.fetch();

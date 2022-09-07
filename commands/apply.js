@@ -20,6 +20,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('apply')
 		.setDescription('Apply to be a bootcamp teacher'),
+	component: 'bootcamp',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
 			const selection = new ActionRowBuilder().addComponents(client.selectMenus.get('teacherRoleSelection').selectMenu());

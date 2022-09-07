@@ -21,6 +21,7 @@ module.exports = {
             option.setName('page')
                 .setDescription('Name of page to search for')
                 .setRequired(true)),
+    component: 'wiki',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
             let page = pagesIndex.find(p => p.title === interaction.options.getString('page'));

@@ -17,6 +17,7 @@ module.exports = {
 		.addBooleanOption(option =>
 			option.setName('no-return')
 				.setDescription('Don\'t return value')),
+	component: 'utility',
 	ownerOnly: true,
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {

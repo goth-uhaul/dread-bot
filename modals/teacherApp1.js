@@ -27,6 +27,7 @@ module.exports = {
         .setCustomId('teacherApp1')
         .setTitle('Application Form (Part 1)')
         .addComponents(srcNameActionRow, timeRunningActionRow, hardwareActionRow),
+    component: 'bootcamp',
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
             let form = wipForms.find(x => x.id === interaction.user.id);

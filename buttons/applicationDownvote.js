@@ -6,6 +6,7 @@ module.exports = {
         .setCustomId('applicationDownvote_' + id)
         .setLabel('Downvote')
         .setStyle(ButtonStyle.Primary),
+    component: 'bootcamp',
     onPressed: (interaction) => {
         return new Promise(async (resolve, reject) => {
             let id = interaction.customId.slice(20);

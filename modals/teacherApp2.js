@@ -44,6 +44,7 @@ module.exports = {
         .setCustomId('teacherApp2')
         .setTitle('Application Form (Part 2)')
         .addComponents(strengthActionRow, weaknessActionRow, backupStratsActionRow, otherStratsActionRow, commentsActionRow),
+    component: 'bootcamp',
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
             let form = wipForms.find(x => x.id === interaction.user.id);
