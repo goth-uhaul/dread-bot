@@ -3,7 +3,8 @@ const { ButtonBuilder, ButtonStyle, EmbedBuilder, ActionRowBuilder } = require("
 const sectionToEmbed = (section) => {
     let embed = new EmbedBuilder().setTitle(section.header);
     if (section.body) embed.setDescription(section.body);
-    section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
+    if (section.image) embed.setImage(section.image);
+    if (section.subsections) section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
 
     return embed;
 }

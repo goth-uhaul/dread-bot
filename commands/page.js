@@ -32,7 +32,9 @@ const splitBody = (subsections, subsection, i) => {
 const parsePage = (content, title, path) => {
     if (content.match('<h1>') || content.match('# Tabs {.tabset}') || content.split(/^#[^#]/m).find(x => x.length > 6000)) return [{ header: title, body: 'This page is too complex to display on Discord! Please view it [here](https://' + wikiDomain + '/en/' + path + ') instead.'}];
 
-    content = content.replace(/> (.+)\n{\.(.+)}/g, (match, x, y) => '> ' + blockquoteEmojis[y] + ' ' + x);
+    content = content.replace(/\n{\.(?:(?:links)|(?:grid))-list}/g, '')
+        .replace(/\[(.+?)\]\((.+?)\)/g, (match, x, y) => y.startsWith('/') ? '[' + x + '](https://' + wikiDomain + y + ')' : match)
+        .replace(/> (.+)\n{\.(.+)}/g, (match, x, y) => '> ' + blockquoteEmojis[y] + ' ' + x);
 
     if (content.match(/^[^#]/)) content = '# ' + title + '\n' + content;
     let sections = content.split(/^#[^#]/m);
@@ -44,6 +46,13 @@ const parsePage = (content, title, path) => {
 
         if (!split[0]) split.shift();
         section.header = split.shift();
+
+        split = split.filter(x => {
+            const matches = x.match(/!\[.+\]\((.+?)\)/);
+
+            if (matches) section.image = matches[1]
+            else return true;
+        });
 
         section.subsections = split.join('\n').trim().split(/^##[^#]/m);
         if (!section.subsections[0]) section.subsections.shift();
@@ -71,6 +80,7 @@ const parsePage = (content, title, path) => {
 const sectionToEmbed = (section) => {
     let embed = new EmbedBuilder().setTitle(section.header);
     if (section.body) embed.setDescription(section.body);
+    if (section.image) embed.setImage(section.image);
     if (section.subsections) section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
 
     return embed;
