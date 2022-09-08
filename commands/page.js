@@ -6,6 +6,7 @@ const { wikiToken } = require('../tokens.json');
 let pagesIndex;
 
 const blockquoteEmojis = {
+    'is-success': '✅',
     'is-info': 'ℹ️',
     'is-warning': '⚠️',
     'is-danger': '❌',
@@ -31,7 +32,7 @@ const splitBody = (subsections, subsection, i) => {
 const parsePage = (content, title, path) => {
     if (content.match('<h1>') || content.match('# Tabs {.tabset}') || content.split(/^#[^#]/m).find(x => x.length > 6000)) return [{ header: title, body: 'This page is too complex to display on Discord! Please view it [here](https://' + wikiDomain + '/en/' + path + ') instead.'}];
 
-    content = content.replace(/> (.+)\n{\.(.+)}/g, (match, x, y) => blockquoteEmojis[y] + ' ' + x);
+    content = content.replace(/> (.+)\n{\.(.+)}/g, (match, x, y) => '> ' + blockquoteEmojis[y] + ' ' + x);
 
     if (content.match(/^[^#]/)) content = '# ' + title + '\n' + content;
     let sections = content.split(/^#[^#]/m);
