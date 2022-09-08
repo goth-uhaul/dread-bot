@@ -28,6 +28,9 @@ global.client = new Discord.Client({
 	allowedMentions: { parse: ['users'], repliedUser: true }
 });
 
+// Cache for wiki pages
+client.pageCache = new Discord.Collection();
+
 // Initialize local commands
 client.commands = new Discord.Collection();
 let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
