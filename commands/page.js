@@ -115,7 +115,7 @@ const singleQuery = (id, elements) => '{pages{single(id:' + id + '){' + elements
 const listQuery = (elements) => '{pages{list{' + elements.join(' ') + '}}}';
 
 // Fetch list of pages
-const listPages = (elements) => new Promise((resolve) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.pages.list)));
+const listPages = (elements) => new Promise((resolve, reject) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.pages.list)).catch(e => reject(e)));
 
 // Fetch specific wiki page
 const fetchPage = (id) => new Promise(async (resolve, reject) => {
@@ -139,7 +139,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
 });
 
 // Function to fetch page index
-const fetchPageIndex = async () => pagesIndex = await listPages(['id', 'title']);
+const fetchPageIndex = async () => pagesIndex = await listPages(['id', 'title']).catch(console.error);
 
 // On boot fetch page index, then update it every 10 minutes
 fetchPageIndex();
@@ -162,7 +162,7 @@ module.exports = {
 
             // Fetch page
             let pageId = page.id;
-            page = await fetchPage(pageId);
+            page = await fetchPage(pageId).catch(e => reject(e));
 
             // Construct embed
             let toSend = { embeds: [sectionToEmbed(page[0])] };
