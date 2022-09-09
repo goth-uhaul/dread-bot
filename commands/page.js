@@ -50,7 +50,7 @@ const parsePage = (content, title, path) => {
         split = split.filter(x => {
             const matches = x.match(/!\[.+\]\((.+?)\)/);
 
-            if (matches) section.image = matches[1]
+            if (matches && !section.image) section.image = matches[1]
             else return true;
         });
 
