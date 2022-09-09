@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
-const { wikiDomain, contributorRole } = require ('../config.json');
+const { graphQlDomain, contributorRole } = require ('../config.json');
 const { wikiToken } = require('../tokens.json');
 
 const userQuery = (id) => '{users{singleByProviderId(providerId:"' + id + '"){id,providerId,name,providerName}}}'
 
-const fetchUser = (id) => new Promise((resolve) => axios.get('http://' + wikiDomain + '/graphql?query=' + userQuery(id), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.users.singleByProviderId)));
+const fetchUser = (id) => new Promise((resolve) => axios.get('http://' + graphQlDomain + '/graphql?query=' + userQuery(id), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.users.singleByProviderId)));
 
 module.exports = {
     data: new SlashCommandBuilder()

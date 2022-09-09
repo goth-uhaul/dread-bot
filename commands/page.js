@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const axios = require('axios');
-const { wikiDomain } = require ('../config.json');
+const { wikiDomain, graphQlDomain } = require ('../config.json');
 const { wikiToken } = require('../tokens.json');
 
 let pagesIndex;
@@ -88,13 +88,13 @@ const sectionToEmbed = (section) => {
 
 const singleQuery = (id, elements) => '{pages{single(id:' + id + '){' + elements.join(' ') + '}}}';
 const listQuery = (elements) => '{pages{list{' + elements.join(' ') + '}}}';
-const listPages = (elements) => new Promise((resolve) => axios.get('http://' + wikiDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.pages.list)));
+const listPages = (elements) => new Promise((resolve) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.pages.list)));
 
 const fetchPage = (id) => new Promise(async (resolve, reject) => {
     let page = client.pageCache.get(id);
     if (page && Date.now() - page.timestamp < 600000) return resolve(page.data);
     else {
-        let data = await axios.get('http://' + wikiDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
+        let data = await axios.get('http://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
 
         const title = data.data.data.pages.single.title;
         const path = data.data.data.pages.single.path;
