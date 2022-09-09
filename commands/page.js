@@ -64,7 +64,7 @@ const parsePage = (content, title, path) => {
             let subsection = {};
 
             subsection.header = split.shift();
-            subsection.body = split.join('\n').trim();
+            subsection.body = split.map(z => z.replace(/\|(.+)\|/, (match, rowContent) => rowContent.split('|').join(' - '))).join('\n').trim();
 
             subsections = splitBody(subsections, subsection, 0);
         });
