@@ -1,8 +1,8 @@
-const { REST } = require('@discordjs/rest');
+const fs = require('fs');
 const { Routes } = require('discord.js');
+const { REST } = require('@discordjs/rest');
 const { enabledComponents } = require('./config.json');
 const { discordToken } = require('./tokens.json');
-const fs = require('node:fs');
 
 let commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));

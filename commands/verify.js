@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
+const { SlashCommandBuilder } = require('discord.js');
 const { graphQlDomain, contributorRole } = require ('../config.json');
 const { wikiToken } = require('../tokens.json');
 

@@ -1,6 +1,5 @@
-Discord = require('discord.js');
-const { InteractionType } = require('discord.js');
-fs = require('fs');
+const fs = require('fs');
+const { InteractionType, Client, Collection } = require('discord.js');
 const { discordToken } = require('./tokens.json');
 const { owners, enabledComponents } = require('./config.json');
 
@@ -23,16 +22,16 @@ global.addWipForm = (form) => {
 }
 
 // Initialize client
-global.client = new Discord.Client({
+global.client = new Client({
 	intents: [],
 	allowedMentions: { parse: ['users'], repliedUser: true }
 });
 
 // Cache for wiki pages
-client.pageCache = new Discord.Collection();
+client.pageCache = new Collection();
 
 // Initialize local commands
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 // Fill local commands
@@ -42,7 +41,7 @@ for (const file of commandFiles) {
 }
 
 // Initialize local modals
-client.modals = new Discord.Collection();
+client.modals = new Collection();
 let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'));
 
 // Fill local modals
@@ -53,7 +52,7 @@ for (const file of modalFiles) {
 }
 
 // Initialize local buttons
-client.buttons = new Discord.Collection();
+client.buttons = new Collection();
 let buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'));
 
 // Fill local buttons
@@ -64,7 +63,7 @@ for (const file of buttonFiles) {
 }
 
 // Initialize local select menus
-client.selectMenus = new Discord.Collection();
+client.selectMenus = new Collection();
 let selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWith('.js'));
 
 // Fill local select menus

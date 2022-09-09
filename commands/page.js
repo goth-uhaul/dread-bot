@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const axios = require('axios');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { wikiDomain, graphQlDomain } = require ('../config.json');
 const { wikiToken } = require('../tokens.json');
 
