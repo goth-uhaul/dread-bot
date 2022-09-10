@@ -3,6 +3,7 @@
 
 const contents = {
 	"enabledComponents": ["functionality"], // array of strings, containing enabled bot components
+	"clientId": "", // client's ID here
 	"owners": [], // array of strings, containing IDs of discord users who can execute owner only commands (i.e. /eval)
 	"wikiDomain": "", // wiki URL here (i.e. dreadwiki.hijumpboots.com)
 	"graphQlDomain": "", // URL for api calls here (i.e. dreadwiki.hijumpboots.com or localhost:4000)

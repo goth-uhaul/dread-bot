@@ -1,13 +1,11 @@
 const fs = require('fs');
 const { Routes } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { enabledComponents } = require('./config.json');
+const { enabledComponents, clientId } = require('./config.json');
 const { discordToken } = require('./tokens.json');
 
 let commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-const clientId = '1008998631698866176';
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
