@@ -37,7 +37,8 @@ let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.j
 // Fill local commands
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    client.commands.set(command.data.name, command);
+    if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
+	else delete command;
 }
 
 // Initialize local modals
