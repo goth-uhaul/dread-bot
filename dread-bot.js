@@ -2,6 +2,7 @@ const fs = require('fs');
 const { InteractionType, Client, Collection } = require('discord.js');
 const { discordToken } = require('./tokens.json');
 const { owners, enabledComponents } = require('./config.json');
+const registerCommands = require('./register-commands.js');
 
 // Temp storage for 2 part forms
 global.wipForms = [];
@@ -73,6 +74,8 @@ for (const file of selectMenuFiles) {
     if (enabledComponents.includes(selectMenu.component)) client.selectMenus.set(file.slice(0, -3), selectMenu);
 	else delete selectMenu;
 }
+
+registerCommands(client.commands.map(c => c.data));
 
 // Interaction handler
 client.on('interactionCreate', async interaction => {
