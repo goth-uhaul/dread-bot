@@ -115,7 +115,9 @@ const singleQuery = (id, elements) => '{pages{single(id:' + id + '){' + elements
 const listQuery = (elements) => '{pages{list{' + elements.join(' ') + '}}}';
 
 // Fetch list of pages
-const listPages = (elements) => new Promise((resolve, reject) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.pages.list)).catch(e => reject(e)));
+const listPages = (elements) => new Promise((resolve, reject) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } })
+    .then(res => res.data.errors ? reject('Received one or more errors:\n\t- ' + res.data.errors.map(e => e.message).join('\n\t- ')) : resolve(res.data.data.pages.list))
+    .catch(e => reject(e)));
 
 // Fetch specific wiki page
 const fetchPage = (id) => new Promise(async (resolve, reject) => {
@@ -127,6 +129,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
     else {
         // Fetch page's title, content, and path
         let data = await axios.get('http://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
+        if (data.data.errors) return reject('Received one or more errors:\n' + data.errors.map(e => e.message).join('\n'));
         data = data.data.data.pages.single;
 
         // Parse page data
@@ -156,6 +159,7 @@ module.exports = {
     component: 'wiki',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
+            if (!pagesIndex) return reject('Error: Page Index undefined');
             // Search page index and return if no page found
             let page = pagesIndex.find(p => p.title.toLowerCase() === interaction.options.getString('page').toLowerCase());
             if (!page) return interaction.reply('No page found!').then(resolve()).catch(e => reject(e));
