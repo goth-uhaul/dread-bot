@@ -135,7 +135,7 @@ client.on('interactionCreate', async interaction => {
 
 // Log on successful login
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log('Interaction handling ready!');
 });
 
 // Login
