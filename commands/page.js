@@ -155,7 +155,8 @@ module.exports = {
         .addStringOption(option =>
             option.setName('page')
                 .setDescription('Name of page to search for')
-                .setRequired(true)),
+                .setRequired(true)
+                .setAutocomplete(true)),
     component: 'wiki',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
@@ -175,6 +176,20 @@ module.exports = {
 
             // Send reply
             interaction.reply(toSend).then(resolve()).catch(e => reject(e));
+        });
+    },
+    autocomplete(interaction) {
+        return new Promise((resolve, reject) => {
+            // Return  error if no page index
+            if (!pagesIndex) return reject('Error: Page Index undefined');
+
+            // Filter pages to match focused value
+            let pages = pagesIndex.filter(p => p.title.toLowerCase().startsWith(interaction.options.getFocused()));
+            // Include up to 25 pages only
+            if (pages.length > 25) pages = pages.slice(0, 24);
+
+            // Return list of matching pages
+            interaction.respond(pages.map(p => { return { name: p.title, value: p.title } })).then(resolve()).catch(e => reject(e));
         });
     }
 };
