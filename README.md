@@ -40,6 +40,10 @@ module.exports = {
     component: '',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {});
+    },
+    // Optional
+    autocomplete(interaction) {
+        return new Promise((resolve, reject) => {});
     }
 };
 ```

@@ -94,6 +94,18 @@ client.on('interactionCreate', async interaction => {
 			interaction.reply('There was an error trying to execute that command!');
 		});
 	}
+	// Autocomplete
+	else if (interaction.isAutocomplete()) {
+		// Get local equivalent
+		const command = client.commands.get(interaction.commandName);
+
+		// Autocomplete command
+		command.autocomplete(interaction)
+		.catch(error => {
+			console.error(error);
+			interaction.reply('There was an error trying to execute that command!');
+		});
+	}
 	// Modal submits
 	else if (interaction.type === InteractionType.ModalSubmit) {
 		// Get local equivalent
