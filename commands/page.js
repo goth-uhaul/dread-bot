@@ -149,6 +149,7 @@ const fetchPageIndex = async () => pagesIndex = await listPages(['id', 'title'])
 fetchPageIndex();
 setInterval(fetchPageIndex, 600000);
 
+// Shared page option for subcommands
 const pageOption = (option) => option.setName('page').setDescription('Name of page to search for').setRequired(true).setAutocomplete(true);
 
 module.exports = {
@@ -175,6 +176,7 @@ module.exports = {
             let pageId = page.id;
             page = await fetchPage(pageId).catch(e => reject(e));
 
+            // Get subcommand name
             const subcommand = interaction.options.getSubcommand();
             let toSend;
 
@@ -185,6 +187,7 @@ module.exports = {
                 if (page.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
             }
             else {
+                // Construct link to page
                 toSend = 'https://' + wikiDomain + '/en/' + page.path;
             }
 
