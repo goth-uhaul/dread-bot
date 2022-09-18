@@ -125,7 +125,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
     let page = client.pageCache.get(id);
 
     // If page exists in the cache and is less than 10 minutes old, return it, otherwise fetch page
-    if (page && Date.now() - page.timestamp < 600000) return resolve(page.data);
+    if (page && Date.now() - page.timestamp < 600000) return resolve(page);
     else {
         // Fetch page's title, content, and path
         let data = await axios.get('http://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
@@ -133,10 +133,11 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
         data = data.data.data.pages.single;
 
         // Parse page data
-        const pageData = parsePage(data.content, data.title, data.path);
+        const pageContent = parsePage(data.content, data.title, data.path);
 
         // Add to cache and return page data
-        client.pageCache.set(id, { data: pageData, timestamp: Date.now() });
+        const pageData = { content: pageContent, path: data.path, timestamp: Date.now() }
+        client.pageCache.set(id, pageData);
         return resolve(pageData);
     }
 });
@@ -148,15 +149,20 @@ const fetchPageIndex = async () => pagesIndex = await listPages(['id', 'title'])
 fetchPageIndex();
 setInterval(fetchPageIndex, 600000);
 
+const pageOption = (option) => option.setName('page').setDescription('Name of page to search for').setRequired(true).setAutocomplete(true);
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('page')
-        .setDescription('Grabs a wiki page')
-        .addStringOption(option =>
-            option.setName('page')
-                .setDescription('Name of page to search for')
-                .setRequired(true)
-                .setAutocomplete(true)),
+        .setDescription('Fetches a wiki page')
+        .addSubcommand(subcommand => 
+            subcommand.setName('content')
+            .setDescription('Fetch page content')
+            .addStringOption(pageOption))
+        .addSubcommand(subcommand =>
+            subcommand.setName('link')
+            .setDescription('Fetch page link')
+            .addStringOption(pageOption)),
     component: 'wiki',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
@@ -169,10 +175,18 @@ module.exports = {
             let pageId = page.id;
             page = await fetchPage(pageId).catch(e => reject(e));
 
-            // Construct embed
-            let toSend = { embeds: [sectionToEmbed(page[0])] };
-            // If page has multiple sections, add buttons to tab through sections
-            if (page.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
+            const subcommand = interaction.options.getSubcommand();
+            let toSend;
+
+            if (subcommand === 'content') {
+                // Construct embed
+                toSend = { embeds: [sectionToEmbed(page.content[0])] };
+                // If page has multiple sections, add buttons to tab through sections
+                if (page.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
+            }
+            else {
+                toSend = 'https://' + wikiDomain + '/en/' + page.path;
+            }
 
             // Send reply
             interaction.reply(toSend).then(resolve()).catch(e => reject(e));
