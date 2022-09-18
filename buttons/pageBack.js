@@ -19,7 +19,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let pageId = parseInt(interaction.customId.slice(9));
 
-            let page = client.pageCache.get(pageId).data;
+            let page = client.pageCache.get(pageId).content;
             let current = page.indexOf(page.find(x => x.header === interaction.message.embeds[0].title));
 
             let toSend = { embeds: [sectionToEmbed(page[current - 1])] };
