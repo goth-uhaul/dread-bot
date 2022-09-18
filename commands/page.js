@@ -184,7 +184,7 @@ module.exports = {
                 // Construct embed
                 toSend = { embeds: [sectionToEmbed(page.content[0])] };
                 // If page has multiple sections, add buttons to tab through sections
-                if (page.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
+                if (page.content.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
             }
             else {
                 // Construct link to page
