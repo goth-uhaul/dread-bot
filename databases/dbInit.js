@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const { enabledComponents } = require('../config.json');
 
 // Initialize sequelize
 let sequelize = new Sequelize('database', 'user', 'password', {
@@ -10,7 +11,14 @@ let sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite'
 });
 
-const models = fs.readdirSync(path.resolve(__dirname, './models')).map(file => require('./models/' + file)(sequelize, Sequelize.DataTypes));
+// Import models
+const models = fs.readdirSync(path.resolve(__dirname, './models'))
+	.map(file => {
+		let model = require('./models/' + file);
+		if (enabledComponents.includes(model.component)) return model.model(sequelize, Sequelize.DataTypes);
+		else delete model;
+	})
+	.filter(file => !!file);
 
 // Force sync command line option
 const force = process.argv.includes('--force') || process.argv.includes('-f');

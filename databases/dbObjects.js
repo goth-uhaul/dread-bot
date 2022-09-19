@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const { enabledComponents } = require('../config.json');
 
 // Initialize sequelize
 let sequelize = new Sequelize('database', 'user', 'password', {
@@ -10,4 +11,9 @@ let sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite'
 });
 
-fs.readdirSync(path.resolve(__dirname, './models')).map(file => exports[file.slice(0, -3)] = require('./models/' + file)(sequelize, Sequelize.DataTypes));
+// Import models
+fs.readdirSync(path.resolve(__dirname, './models')).forEach(file => {
+	const model = require('./models/' + file);
+	if (enabledComponents.includes(model.component)) exports[file.slice(0, -3)] = model.model(sequelize, Sequelize.DataTypes);
+	else delete model;
+});
