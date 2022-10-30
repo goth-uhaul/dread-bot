@@ -8,7 +8,8 @@ module.exports = {
         .addStringOption(option =>
             option.setName('user')
                 .setDescription('User\'s ID')
-                .setRequired(true)),
+                .setRequired(true)
+                .setAutocomplete(true)),
     component: 'bootcamp',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
@@ -30,5 +31,15 @@ module.exports = {
             Upvotes: ${response.upvotes}
             Downvotes: ${response.downvotes}`).then(resolve()).catch(e => reject(e));
 		});
-	}
+	},
+    autocomplete(interaction) {
+        return new Promise(async (resolve, reject) => {
+            const user = interaction.options.getString('user');
+
+            let responses = await TeacherResponses.findAll();
+            responses = responses.filter(r => r.userId.includes(user) || r.discordName.includes(user) || r.srcName.includes(user));
+
+            interaction.respond(responses.map(r => { return { name: r.discordName, value: r.userId } }));
+        });
+    }
 };
