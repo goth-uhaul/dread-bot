@@ -69,7 +69,7 @@ module.exports = {
                     await TeacherResponses.update({
                         discordName: interaction.user.username,
                         srcName: form.questions.getTextInputValue('teacherAppSrcName'),
-                        positions: form.positions.map(p => getPositionName(p)).join(','),
+                        positions: form.positions.map(p => getPositionName(p)).join(', '),
                         timeRunning: form.questions.getTextInputValue('teacherAppHardware'),
                         strength: interaction.fields.getTextInputValue('teacherAppStrength'),
                         weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
@@ -87,7 +87,7 @@ module.exports = {
                     userId: interaction.user.id,
                     discordName: interaction.user.username,
                     srcName: form.questions.getTextInputValue('teacherAppSrcName'),
-                    positions: form.positions.map(p => getPositionName(p)).join(','),
+                    positions: form.positions.map(p => getPositionName(p)).join(', '),
                     timeRunning: form.questions.getTextInputValue('teacherAppTimeRunning'),
                     hardware: form.questions.getTextInputValue('teacherAppHardware'),
                     strength: interaction.fields.getTextInputValue('teacherAppStrength'),
@@ -105,7 +105,7 @@ module.exports = {
                 '\nSRC Username: ' + response.srcName +
                 '\nPositions: ' + response.positions +
                 '\nTime Running: ' + response.timeRunning +
-                '\nHardware: ' + response.hardware +
+                '\nAbility to Stream: ' + response.hardware +
                 '\nStrength: ' + response.strength +
                 '\nWeaknesss: ' + response.weakness +
                 '\nBackup Strats: ' + response.backupStrats +

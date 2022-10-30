@@ -46,7 +46,7 @@ module.exports = {
                 const messageContent = 'Here are your responses so far:\n' +
                 '\nSRC Username: ' + interaction.fields.getTextInputValue('teacherAppSrcName') +
                 '\nTime Running: ' + interaction.fields.getTextInputValue('teacherAppTimeRunning') +
-                '\nHardware: ' + interaction.fields.getTextInputValue('teacherAppHardware') +
+                '\nAbility to Stream: ' + interaction.fields.getTextInputValue('teacherAppHardware') +
                 '\n\nIf you are ready to complete the second part of the form, please press the button below. This will expire in 15 minutes ()';
 
                 const button = new ActionRowBuilder().addComponents(client.buttons.get('showTeacherApp2Confirm').button('teacherApp2'));
