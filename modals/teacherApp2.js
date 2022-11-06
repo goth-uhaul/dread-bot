@@ -66,11 +66,12 @@ module.exports = {
                 let updated = false;
                 
                 if (response) {
-                    await TeacherResponses.update({
+                    response = await response.update({
                         discordName: interaction.user.username,
                         srcName: form.questions.getTextInputValue('teacherAppSrcName'),
                         positions: form.positions.map(p => getPositionName(p)).join(', '),
-                        timeRunning: form.questions.getTextInputValue('teacherAppHardware'),
+                        timeRunning: form.questions.getTextInputValue('teacherAppTimeRunning'),
+                        hardware: form.questions.getTextInputValue('teacherAppHardware'),
                         strength: interaction.fields.getTextInputValue('teacherAppStrength'),
                         weakness: interaction.fields.getTextInputValue('teacherAppWeakness'),
                         backupStrats: interaction.fields.getTextInputValue('teacherAppBackupStrats'),
