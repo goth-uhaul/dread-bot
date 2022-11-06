@@ -4,19 +4,22 @@ let srcNameInput = new TextInputBuilder()
     .setCustomId('teacherAppSrcName')
     .setLabel('What is your username on speedrun.com?')
     .setStyle(TextInputStyle.Short)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(50);
 
 let timeRunningInput = new TextInputBuilder()
     .setCustomId('teacherAppTimeRunning')
     .setLabel('How long have you been running Metroid Dread?')
     .setStyle(TextInputStyle.Short)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(300);
 
 let hardwareInput = new TextInputBuilder()
     .setCustomId('teacherAppHardware')
     .setLabel('Do you have an easy way to stream to Discord?')
     .setStyle(TextInputStyle.Short)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(300);
 
 const srcNameActionRow = new ActionRowBuilder().addComponents(srcNameInput);
 const timeRunningActionRow = new ActionRowBuilder().addComponents(timeRunningInput);

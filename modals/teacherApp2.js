@@ -7,30 +7,35 @@ let strengthInput = new TextInputBuilder()
     .setCustomId('teacherAppStrength')
     .setLabel('What\'s your biggest strength in speedrunning?')
     .setStyle(TextInputStyle.Paragraph)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(1000);
 
 let weaknessInput = new TextInputBuilder()
     .setCustomId('teacherAppWeakness')
     .setLabel('What\'s your biggest weakness in speedrunning?')
     .setStyle(TextInputStyle.Paragraph)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(1000);
 
 let backupStratsInput = new TextInputBuilder()
     .setCustomId('teacherAppBackupStrats')
     .setLabel('How many backup strats can you teach?')
     .setStyle(TextInputStyle.Paragraph)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(1000);
 
 let otherStratsInput = new TextInputBuilder()
     .setCustomId('teacherAppOtherStrats')
     .setLabel('Can you teach strats that you don\'t use?')
     .setStyle(TextInputStyle.Paragraph)
-    .setRequired(true);
+    .setRequired(true)
+    .setMaxLength(1000);
 
 let commentsInput = new TextInputBuilder()
     .setCustomId('teacherAppComments')
     .setLabel('Please put any additional comments below.')
-    .setStyle(TextInputStyle.Paragraph);
+    .setStyle(TextInputStyle.Paragraph)
+    .setMaxLength(1000);
 
 const strengthActionRow = new ActionRowBuilder().addComponents(strengthInput);
 const weaknessActionRow = new ActionRowBuilder().addComponents(weaknessInput);
@@ -68,7 +73,7 @@ module.exports = {
                 
                 if (response) {
                     response = await response.update({
-                        discordName: interaction.user.username,
+                        discordName: interaction.user.tag,
                         srcName: form.questions.getTextInputValue('teacherAppSrcName'),
                         positions: form.positions.map(p => getPositionName(p)).join(', '),
                         timeRunning: form.questions.getTextInputValue('teacherAppTimeRunning'),
@@ -87,7 +92,7 @@ module.exports = {
                 }
                 else response = await TeacherResponses.create({
                     userId: interaction.user.id,
-                    discordName: interaction.user.username,
+                    discordName: interaction.user.tag,
                     srcName: form.questions.getTextInputValue('teacherAppSrcName'),
                     positions: form.positions.map(p => getPositionName(p)).join(', '),
                     timeRunning: form.questions.getTextInputValue('teacherAppTimeRunning'),
