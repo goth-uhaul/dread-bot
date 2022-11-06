@@ -1,6 +1,7 @@
 const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require("discord.js");
 const { applicationChannel, positions } = require('../config.json');
 const { TeacherResponses } = require('../databases/dbObjects.js');
+const { applicationEmbed } = require("../utils/applicationUtils");
 
 let strengthInput = new TextInputBuilder()
     .setCustomId('teacherAppStrength')
@@ -101,25 +102,15 @@ module.exports = {
                     status: 'Pending'
                 });
 
-                const responseText = '\nUser ID: ' + response.userId +
-                '\nDiscord Username: ' + response.discordName +
-                '\nSRC Username: ' + response.srcName +
-                '\nPositions: ' + response.positions +
-                '\nTime Running: ' + response.timeRunning +
-                '\nAbility to Stream: ' + response.hardware +
-                '\nStrength: ' + response.strength +
-                '\nWeaknesss: ' + response.weakness +
-                '\nBackup Strats: ' + response.backupStrats +
-                '\nOther Strats: ' + response.otherStrats +
-                '\nComments: ' + response.comments;
+                const responseEmbed = applicationEmbed(response);
 
                 const upvoteButton = client.buttons.get('applicationUpvote').button(response.userId);
                 const downvoteButton = client.buttons.get('applicationDownvote').button(response.userId);
 
                 const voteButtons = new ActionRowBuilder().addComponents(upvoteButton, downvoteButton);
                 
-                interaction.reply('Response received! Here were your answers:\n' + responseText).then(resolve()).catch(e => reject(e));
-                client.channels.fetch(applicationChannel).then(c => c.send({ content: (updated ? 'Updated Application!\n' : 'New Application!\n') + responseText, components: [voteButtons] }));
+                interaction.reply({ content: 'Response received!', embeds: [responseEmbed] }).then(resolve()).catch(e => reject(e));
+                client.channels.fetch(applicationChannel).then(c => c.send({ content: updated ? 'Updated Application!\n' : 'New Application!\n', embeds: [responseEmbed], components: [voteButtons] }));
             }
         });
     }
