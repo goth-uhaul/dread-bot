@@ -46,7 +46,7 @@ const commentsActionRow = new ActionRowBuilder().addComponents(commentsInput);
 const getPositionName = (id) => positions.find(p => p.value === id).label;
 
 module.exports = {
-    modal: new ModalBuilder()
+    modal: () => new ModalBuilder()
         .setCustomId('teacherApp2')
         .setTitle('Application Form (Part 2)')
         .addComponents(strengthActionRow, weaknessActionRow, backupStratsActionRow, otherStratsActionRow, commentsActionRow),

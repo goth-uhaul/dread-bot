@@ -8,7 +8,7 @@ module.exports = {
     component: 'functionality',
     onPressed: (interaction) => {
         return new Promise(async (resolve, reject) => {
-            await interaction.showModal(client.modals.get(interaction.customId.slice(17)).modal);
+            await interaction.showModal(client.modals.get(interaction.customId.slice(17)).modal());
         });
     }
 };

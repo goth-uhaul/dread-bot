@@ -15,7 +15,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             addWipForm({ id: interaction.user.id, positions: interaction.values });
 
-            await interaction.showModal(client.modals.get('teacherApp1').modal);
+            await interaction.showModal(client.modals.get('teacherApp1').modal());
         });
     }
 };

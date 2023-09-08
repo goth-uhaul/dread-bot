@@ -49,7 +49,7 @@ let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'))
 // Fill local modals
 for (const file of modalFiles) {
     const modal = require(`./modals/${file}`);
-    if (enabledComponents.includes(modal.component)) client.modals.set(modal.modal.data.custom_id, modal);
+    if (enabledComponents.includes(modal.component)) client.modals.set(file.slice(0, -3), modal);
 	else delete modal;
 }
 
@@ -109,7 +109,8 @@ client.on('interactionCreate', async interaction => {
 	// Modal submits
 	else if (interaction.type === InteractionType.ModalSubmit) {
 		// Get local equivalent
-		const modal = client.modals.get(interaction.customId);
+		let pos = interaction.customId.indexOf('_');
+		const modal = client.modals.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command
 		modal.onSubmit(interaction)

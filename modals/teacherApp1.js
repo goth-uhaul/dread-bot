@@ -26,7 +26,7 @@ const timeRunningActionRow = new ActionRowBuilder().addComponents(timeRunningInp
 const hardwareActionRow = new ActionRowBuilder().addComponents(hardwareInput);
 
 module.exports = {
-    modal: new ModalBuilder()
+    modal: () => new ModalBuilder()
         .setCustomId('teacherApp1')
         .setTitle('Application Form (Part 1)')
         .addComponents(srcNameActionRow, timeRunningActionRow, hardwareActionRow),

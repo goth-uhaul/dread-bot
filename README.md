@@ -66,10 +66,10 @@ module.exports = {
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
 
 module.exports = {
-    modal: new ModalBuilder(),
+    modal: () => new ModalBuilder(),
     component: '',
     onSubmit(interaction) {
-        return new Promise(async (resolve, reject) => {}});
+        return new Promise(async (resolve, reject) => {});
     }
 };
 ```
