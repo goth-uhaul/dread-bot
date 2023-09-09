@@ -24,7 +24,7 @@ global.addWipForm = (form) => {
 
 // Initialize client
 global.client = new Client({
-	intents: [],
+	intents: [ 'Guilds' ],
 	allowedMentions: { parse: ['users'], repliedUser: true }
 });
 

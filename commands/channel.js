@@ -1,9 +1,12 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { moderatorRole } = require('../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('channel')
         .setDescription('Modifies a channel')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ViewAuditLog)
+        .setDMPermission(false)
         .addSubcommand(subcommand =>
             subcommand.setName('slowmode')
             .setDescription('Sets the channel\'s slowmode')
@@ -40,6 +43,8 @@ module.exports = {
     component: 'moderation',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
+            if (!interaction.member.roles.cache.has(moderatorRole)) return interaction.reply({ content: 'You don\'t have permission to execute this command!', ephemeral: true }).then(resolve()).catch(reject);
+
             const subcommand = interaction.options.getSubcommand();
             const channel = interaction.options.getChannel('channel');
 

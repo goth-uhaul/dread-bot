@@ -11,6 +11,7 @@ To get the bot running, you should set up the following in `config.json`:
 	"wikiDomain": "", // wiki URL here (i.e. dreadwiki.hijumpboots.com)
 	"graphQlDomain": "", // URL for api calls here (i.e. dreadwiki.hijumpboots.com or localhost:4000)
 	"contributorRole": "", // ID of wiki contributor role here (for /verify)
+    "moderatorRole": "", // ID of moderator role here (for moderation commands)
 	"applicationChannel": "", // ID of channel to send teacher applications to here
 	"positions": [
 		// array of objects, representing teacher positions. these are in the following format:
