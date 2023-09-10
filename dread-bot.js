@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { InteractionType, Client, Collection } = require('discord.js');
+const { InteractionType, Client, Collection, GatewayIntentBits } = require('discord.js');
 const { discordToken } = require('./tokens.json');
 const { owners, enabledComponents } = require('./config.json');
 const registerCommands = require('./register-commands.js');
@@ -24,7 +24,7 @@ global.addWipForm = (form) => {
 
 // Initialize client
 global.client = new Client({
-	intents: [ 'Guilds' ],
+	intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers ],
 	allowedMentions: { parse: ['users'], repliedUser: true }
 });
 
@@ -133,9 +133,10 @@ client.on('interactionCreate', async interaction => {
 		});
 	}
 	// selectMenu submits
-	else if (interaction.isSelectMenu()) {
+	else if (interaction.isAnySelectMenu()) {
 		// Get local equivalent
-		const selectMenu = client.selectMenus.get(interaction.customId);
+		let pos = interaction.customId.indexOf('_');
+		const selectMenu = client.selectMenus.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command
 		selectMenu.onSelection(interaction)
