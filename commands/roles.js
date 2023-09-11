@@ -14,7 +14,7 @@ module.exports = {
     component: 'moderation',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
-            if (!interaction.member.roles.cache.has(moderatorRole)) return interaction.reply({ content: 'You don\'t have permission to execute this command!', ephemeral: true }).then(resolve()).catch(reject);
+            if (!interaction.member.roles.cache.has(moderatorRole)) return interaction.reply({ content: 'You don\'t have permission to execute this command!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
             const user = interaction.options.getUser('user');
 
