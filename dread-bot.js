@@ -42,6 +42,17 @@ for (const file of commandFiles) {
 	else delete command;
 }
 
+// Initialize local context menus
+client.contextMenus = new Collection();
+let contextMenus = fs.readdirSync('./contextMenus').filter(file => file.endsWith('.js'));
+
+// Fill local context menus
+for (const file of contextMenus) {
+    const contextMenu = require(`./contextMenus/${file}`);
+    if (enabledComponents.includes(contextMenu.component)) client.contextMenus.set(contextMenu.data.name, contextMenu);
+	else delete contextMenu;
+}
+
 // Initialize local modals
 client.modals = new Collection();
 let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'));
@@ -75,7 +86,7 @@ for (const file of selectMenuFiles) {
 	else delete selectMenu;
 }
 
-registerCommands(client.commands.map(c => c.data));
+registerCommands(client.commands.map(c => c.data).concat(client.contextMenus.map(c => c.data)));
 
 // Interaction handler
 client.on('interactionCreate', async interaction => {
@@ -101,6 +112,21 @@ client.on('interactionCreate', async interaction => {
 
 		// Autocomplete command
 		command.autocomplete(interaction)
+		.catch(error => {
+			console.error(error);
+			interaction.reply('There was an error trying to execute that command!');
+		});
+	}
+	// Context menus
+	else if (interaction.isUserContextMenuCommand()) {
+		// Get local equivalent
+		const contextMenu = client.contextMenus.get(interaction.commandName);
+
+		// Restrict owner only commands (probably unnecessary feature)
+		if (contextMenu.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply('Only the bot owners can use this command!');
+
+		// Execute command
+		contextMenu.execute(interaction)
 		.catch(error => {
 			console.error(error);
 			interaction.reply('There was an error trying to execute that command!');

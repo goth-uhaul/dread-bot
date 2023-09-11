@@ -49,6 +49,19 @@ module.exports = {
 };
 ```
 
+## `/commands/`
+```
+const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
+
+module.exports = {
+    data: new ContextMenuCommandBuilder(),
+    component: '',
+    execute(interaction) {
+        return new Promise(async (resolve, reject) => {});
+    },
+};
+```
+
 ## `/buttons/`
 ```
 const { ButtonBuilder, ButtonStyle } = require("discord.js");
