@@ -23,8 +23,5 @@ module.exports = {
 
 			await interaction.reply({ content: 'Select ' + user.toString() + '\'s roles.' , components: [addRoleSelection, removeRoleSelection], ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
-    },
-    autocomplete(interaction) {
-        return new Promise((resolve, reject) => {});
     }
 };

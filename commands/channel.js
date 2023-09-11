@@ -62,8 +62,5 @@ module.exports = {
                 interaction.showModal(client.modals.get('channelTopic').modal(channel.id)).then(resolve()).catch(e => reject(e));
             }
         });
-    },
-    autocomplete(interaction) {
-        return new Promise((resolve, reject) => {});
     }
 };
