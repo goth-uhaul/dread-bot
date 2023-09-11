@@ -59,7 +59,7 @@ module.exports = {
                 interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
             }
             else if (subcommand === 'topic') {
-                interaction.showModal(client.modals.get('channelTopic').modal(channel.id));
+                interaction.showModal(client.modals.get('channelTopic').modal(channel.id)).then(resolve()).catch(e => reject(e));
             }
         });
     },

@@ -16,12 +16,12 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             if (!interaction.member.roles.cache.has(moderatorRole)) return interaction.reply({ content: 'You don\'t have permission to execute this command!', ephemeral: true }).then(resolve()).catch(reject);
 
-            const user = interaction.options.getUser('user')
+            const user = interaction.options.getUser('user');
 
             const addRoleSelection = new ActionRowBuilder().addComponents(client.selectMenus.get('addUserRolesSelection').selectMenu(user.id));
             const removeRoleSelection = new ActionRowBuilder().addComponents(client.selectMenus.get('removeUserRolesSelection').selectMenu(user.id));
 
-			await interaction.reply({ content: 'Select ' + user.toString() + '\'s roles.' , components: [addRoleSelection, removeRoleSelection], ephemeral: true });
+			await interaction.reply({ content: 'Select ' + user.toString() + '\'s roles.' , components: [addRoleSelection, removeRoleSelection], ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
     },
     autocomplete(interaction) {

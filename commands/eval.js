@@ -31,7 +31,7 @@ module.exports = {
 
 				interaction.reply('```js\n' + evaled + '```').then(resolve()).catch(e => reject(e));
 			} catch (err) {
-				interaction.reply('`ERROR` ```xl\n' + clean(err) + '\n```').then(resolve()).catch(e => rejects(e));
+				interaction.reply('`ERROR` ```xl\n' + clean(err) + '\n```').then(resolve()).catch(e => reject(e));
 			}
 		});
 	}

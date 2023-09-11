@@ -25,7 +25,7 @@ module.exports = {
 		return new Promise(async (resolve, reject) => {
 			const selection = new ActionRowBuilder().addComponents(client.selectMenus.get('teacherRoleSelection').selectMenu());
 
-			await interaction.reply({ content: messageContent , components: [selection] });
+			await interaction.reply({ content: messageContent , components: [selection] }).then(resolve()).catch(e => reject(e));
 		});
 	}
 };
