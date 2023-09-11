@@ -9,6 +9,10 @@ module.exports = {
     component: 'moderation',
     onSelection: (interaction) => {
         return new Promise(async (resolve, reject) => {
+            const highestRole = interaction.guild.members.me.roles.highest;
+            const higherRole = interaction.roles.find(r => r.position >= highestRole.position);
+            if (higherRole) return interaction.reply({ content: 'The ' + higherRole.toString() + ' role is not lower than my highest role. Please de-select it.', ephemeral: true }).then(resolve()).catch(e => reject(e));
+
             const member = await interaction.guild.members.fetch(interaction.customId.slice(22)).catch(e => reject(e));
             const oldRoles = member.roles.cache;
 
