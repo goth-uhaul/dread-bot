@@ -25,7 +25,8 @@ global.addWipForm = (form) => {
 // Initialize client
 global.client = new Client({
 	intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers ],
-	allowedMentions: { parse: ['users'], repliedUser: true }
+	allowedMentions: { parse: ['users'], repliedUser: true },
+	rest: { rejectOnRateLimit: ['/channels'] }
 });
 
 // Cache for wiki pages
