@@ -170,7 +170,7 @@ module.exports = {
             if (!pagesIndex) return reject('Error: Page Index undefined');
             // Search page index and return if no page found
             let page = pagesIndex.find(p => p.title.toLowerCase() === interaction.options.getString('page').toLowerCase());
-            if (!page) return interaction.reply('No page found!').then(resolve()).catch(e => reject(e));
+            if (!page) return interaction.reply({ content: 'No page found!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
             // Fetch page
             let pageId = page.id;

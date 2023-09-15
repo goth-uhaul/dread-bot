@@ -15,7 +15,7 @@ module.exports = {
                 return interaction.reply(err.message).then(resolve()).catch((e) => reject(e));
             }
             else {
-                interaction.reply('Rebooting...').then(() => process.exit(0)).catch((e) => reject(e));
+                interaction.reply({ content: 'Rebooting...', ephemeral: true }).then(() => process.exit(0)).catch((e) => reject(e));
             }
 		});
 	}

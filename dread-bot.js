@@ -97,13 +97,13 @@ client.on('interactionCreate', async interaction => {
 		const command = client.commands.get(interaction.commandName);
 
 		// Restrict owner only commands
-		if (command.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply('Only the bot owners can use this command!');
+		if (command.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
 
 		// Execute command
 		command.execute(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error trying to execute that command!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 	// Autocomplete
@@ -115,7 +115,7 @@ client.on('interactionCreate', async interaction => {
 		command.autocomplete(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error trying to execute that command!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 	// Context menus
@@ -124,13 +124,13 @@ client.on('interactionCreate', async interaction => {
 		const contextMenu = client.contextMenus.get(interaction.commandName);
 
 		// Restrict owner only commands (probably unnecessary feature)
-		if (contextMenu.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply('Only the bot owners can use this command!');
+		if (contextMenu.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
 
 		// Execute command
 		contextMenu.execute(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error trying to execute that command!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 	// Modal submits
@@ -143,7 +143,7 @@ client.on('interactionCreate', async interaction => {
 		modal.onSubmit(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 	// Button presses
@@ -156,7 +156,7 @@ client.on('interactionCreate', async interaction => {
 		button.onPressed(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 	// selectMenu submits
@@ -169,7 +169,7 @@ client.on('interactionCreate', async interaction => {
 		selectMenu.onSelection(interaction)
 		.catch(error => {
 			console.error(error);
-			interaction.reply('There was an error!');
+			interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
 		});
 	}
 });
