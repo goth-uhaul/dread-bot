@@ -28,7 +28,7 @@ module.exports = {
             if (!interaction.roles.find(r => r.id !== interaction.guild.roles.everyone.id && !oldRoles.has(r.id))) return interaction.reply({ content: 'No changes made, as no new roles were selected.', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
             const newMember = await member.roles.add(interaction.roles, formatRoles(interaction.roles.filter(r => !oldRoles.has(r.id)).map(r => r.name)) + ' added by ' + interaction.user.username + '.').catch(e => reject(e));
-            interaction.reply({ content: member.user.toString() + '\'s roles updated successfully.\n\nRoles added: ' + newMember.roles.cache.difference(oldRoles).map(r => r.toString()), ephemeral: true }).then(resolve()).catch(e => reject(e));
+            if (newMember) interaction.reply({ content: member.user.toString() + '\'s roles updated successfully.\n\nRoles added: ' + newMember.roles.cache.difference(oldRoles).map(r => r.toString()), ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
     }
 };

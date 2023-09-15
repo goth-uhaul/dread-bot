@@ -48,13 +48,13 @@ module.exports = {
 
             if (subcommand === 'slowmode') {
                 const cd = interaction.options.getNumber('cooldown');
-                await channel.setRateLimitPerUser(cd, 'Slowmode set to ' + cd + ' seconds by ' + interaction.user.username + '.').catch(e => reject(e));
-                interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
+                const res = await channel.setRateLimitPerUser(cd, 'Slowmode set to ' + cd + ' seconds by ' + interaction.user.username + '.').catch(e => reject(e));
+                if (res) interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
             }
             else if (subcommand === 'rename') {
                 const newName = interaction.options.getString('name');
-                await channel.setName(newName, 'Channel name changed to #' + newName + ' by ' + interaction.user.username + '.').catch(e => reject(e));
-                interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
+                const res = await channel.setName(newName, 'Channel name changed to #' + newName + ' by ' + interaction.user.username + '.').catch(e => reject(e));
+                if (res) interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
             }
             else if (subcommand === 'topic') {
                 interaction.showModal(client.modals.get('channelTopic').modal(channel.id)).then(resolve()).catch(e => reject(e));

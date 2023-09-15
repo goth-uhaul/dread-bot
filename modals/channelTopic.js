@@ -19,8 +19,8 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             const id = interaction.customId.slice(13);
             const newTopic = interaction.fields.getTextInputValue('channelTopicTopic');
-            await interaction.guild.channels.cache.get(id).setTopic(newTopic, 'Channel topic set to "' + newTopic + '" by ' + interaction.user.username + '.').catch(e => reject(e));
-            interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
+            const res = await interaction.guild.channels.cache.get(id).setTopic(newTopic, 'Channel topic set to "' + newTopic + '" by ' + interaction.user.username + '.').catch(e => reject(e));
+            if (res) interaction.reply({ content: 'Channel updated successfully.', ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
     }
 };
