@@ -39,7 +39,11 @@ let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.j
 // Fill local commands
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
+	if (command.subcommands) {
+		command.subcommands.forEach((v, k) => enabledComponents.includes(v.component) ? command.data.addSubcommand(v.data) : command.subcommands.delete(k));
+		client.commands.set(command.data.name, command);
+	}
+    else if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
 	else delete command;
 }
 
@@ -93,8 +97,9 @@ registerCommands(client.commands.map(c => c.data).concat(client.contextMenus.map
 client.on('interactionCreate', async interaction => {
 	// Slash commands
 	if (interaction.isChatInputCommand()) {
-		// Get local equivalent
-		const command = client.commands.get(interaction.commandName);
+		// Get local equivalent and find subcommand
+		let command = client.commands.get(interaction.commandName);
+		if (command.subcommands) command = command.subcommands.get(interaction.options.getSubcommand());
 
 		// Restrict owner only commands
 		if (command.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
