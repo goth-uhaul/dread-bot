@@ -7,9 +7,8 @@ module.exports = {
     component: 'utility',
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
-            const time = Date.now();
-            await interaction.reply('Pinging...')
-            interaction.editReply('Ping: ' + (interaction.createdTimestamp - time + 'ms')).then(resolve()).catch((e) => reject(e));
+            const sent = await interaction.reply({ content: 'Pinging...', fetchReply: true });
+            interaction.editReply('Ping: ' + (sent.createdTimestamp - interaction.createdTimestamp + 'ms')).then(resolve()).catch((e) => reject(e));
         });
     }
 };
