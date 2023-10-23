@@ -18,6 +18,7 @@
         "prefer-const": "error",
         "prefer-exponentiation-operator": "error",
         "prefer-regex-literals": "error",
+        "require-await": "error",
         "spaced-comment": "error",
         "arrow-spacing": "error",
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],

@@ -15,7 +15,7 @@ module.exports = {
         .setLabel('Previous Section')
         .setStyle(ButtonStyle.Primary),
     component: 'wiki',
-    onPressed: (interaction) => new Promise(async (resolve, reject) => {
+    onPressed: (interaction) => new Promise((resolve, reject) => {
         const pageId = parseInt(interaction.customId.slice(9));
 
         const page = client.pageCache.get(pageId).content;

@@ -92,7 +92,7 @@ for (const file of selectMenuFiles) {
 registerCommands(client.commands.map(c => c.data).concat(client.contextMenus.map(c => c.data)));
 
 // Interaction handler
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', interaction => {
     // Slash commands
     if (interaction.isChatInputCommand()) {
         // Get local equivalent and find subcommand
