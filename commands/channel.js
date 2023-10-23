@@ -7,35 +7,35 @@ module.exports = {
         .setDescription('Modifies a channel')
         .setDefaultMemberPermissions(PermissionFlagsBits.ViewAuditLog)
         .setDMPermission(false)
-        .addSubcommand(subcommand =>
-            subcommand.setName('slowmode')
+        .addSubcommand(subcommand => subcommand
+            .setName('slowmode')
             .setDescription('Sets the channel\'s slowmode')
-            .addNumberOption(option =>
-                option.setName('cooldown')
+            .addNumberOption(option => option
+                .setName('cooldown')
                 .setDescription('How long users must wait between messages, in seconds')
                 .setMinValue(0)
                 .setMaxValue(216000)
                 .setRequired(true))
-            .addChannelOption(option =>
-                option.setName('channel')
+            .addChannelOption(option => option
+                .setName('channel')
                 .setDescription('The channel to update')))
-        .addSubcommand(subcommand =>
-            subcommand.setName('rename')
+        .addSubcommand(subcommand => subcommand
+            .setName('rename')
             .setDescription('Changes the channel\'s name')
-            .addStringOption(option =>
-                option.setName('name')
+            .addStringOption(option => option
+                .setName('name')
                 .setDescription('The new channel name')
                 .setMinLength(1)
                 .setMaxLength(100)
                 .setRequired(true))
-            .addChannelOption(option =>
-                option.setName('channel')
+            .addChannelOption(option => option
+                .setName('channel')
                 .setDescription('The channel to update')))
-        .addSubcommand(subcommand =>
-            subcommand.setName('topic')
+        .addSubcommand(subcommand => subcommand
+            .setName('topic')
             .setDescription('Sets the channel\'s description')
-            .addChannelOption(option =>
-                option.setName('channel')
+            .addChannelOption(option => option
+                .setName('channel')
                 .setDescription('The channel to update'))),
     component: 'moderation',
     execute(interaction) {

@@ -7,8 +7,8 @@ module.exports = {
         .setDescription('Sets a user\'s roles')
         .setDefaultMemberPermissions(PermissionFlagsBits.ViewAuditLog)
         .setDMPermission(false)
-        .addUserOption(option =>
-            option.setName('user')
+        .addUserOption(option => option
+            .setName('user')
             .setDescription('The user to update the roles of.')
             .setRequired(true)),
     component: 'moderation',

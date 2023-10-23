@@ -251,8 +251,8 @@ module.exports = {
     ]),
     subcommands: new Collection([
         ['verify', {
-            data: (sc) =>
-                sc.setName('verify')
+            data: (sc) => sc
+                .setName('verify')
                 .setDescription('Verify your wiki account'),
             component: 'wiki',
             execute(interaction) {

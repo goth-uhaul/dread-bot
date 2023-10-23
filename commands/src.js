@@ -16,8 +16,8 @@ module.exports = {
     component: 'src',
     subcommands: new Collection([
         ['verify', {
-            data: (sc) =>
-                sc.setName('verify')
+            data: (sc) => sc
+                .setName('verify')
                 .setDescription('Verify your speedrun.com account'),
             component: 'src',
             execute(interaction) {

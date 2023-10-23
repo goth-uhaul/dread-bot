@@ -10,13 +10,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('eval')
 		.setDescription('eval')
-        .addStringOption(option =>
-            option.setName('code')
-                .setDescription('Code to eval')
-                .setRequired(true))
-		.addBooleanOption(option =>
-			option.setName('no-return')
-				.setDescription('Don\'t return value')),
+        .addStringOption(option => option
+            .setName('code')
+            .setDescription('Code to eval')
+            .setRequired(true))
+		.addBooleanOption(option => option
+			.setName('no-return')
+            .setDescription('Don\'t return value')),
 	component: 'utility',
 	ownerOnly: true,
 	execute(interaction) {

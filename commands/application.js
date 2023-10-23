@@ -6,11 +6,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('application')
 		.setDescription('Fetch a bootcamp application')
-        .addStringOption(option =>
-            option.setName('user')
-                .setDescription('User\'s ID')
-                .setRequired(true)
-                .setAutocomplete(true)),
+        .addStringOption(option => option
+            .setName('user')
+            .setDescription('User\'s ID')
+            .setRequired(true)
+            .setAutocomplete(true)),
     component: 'bootcamp',
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
