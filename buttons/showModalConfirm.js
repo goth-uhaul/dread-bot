@@ -1,4 +1,4 @@
-const { ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
     button: (modal) => new ButtonBuilder()

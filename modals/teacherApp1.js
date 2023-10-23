@@ -1,4 +1,4 @@
-const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require("discord.js");
+const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require('discord.js');
 
 const srcNameInput = new TextInputBuilder()
     .setCustomId('teacherAppSrcName')

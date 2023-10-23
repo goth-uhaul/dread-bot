@@ -1,5 +1,5 @@
-const axios = require("axios");
-const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
+const axios = require('axios');
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const { srcRole } = require('../config.json');
 
 const apiKeyInput = new TextInputBuilder()

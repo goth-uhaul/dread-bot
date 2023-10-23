@@ -1,4 +1,4 @@
-const { ButtonBuilder, ButtonStyle, EmbedBuilder, ActionRowBuilder } = require("discord.js");
+const { ButtonBuilder, ButtonStyle, EmbedBuilder, ActionRowBuilder } = require('discord.js');
 
 const sectionToEmbed = (section) => {
     const embed = new EmbedBuilder().setTitle(section.header);
