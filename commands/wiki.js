@@ -251,7 +251,7 @@ module.exports = {
     ]),
     subcommands: new Collection([
         ['verify', {
-            data: (sc) => sc
+            data: new SlashCommandSubcommandBuilder()
                 .setName('verify')
                 .setDescription('Verify your wiki account'),
             component: 'wiki',

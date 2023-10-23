@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, Collection, ActionRowBuilder } = require('discord.js');
+const { SlashCommandBuilder, Collection, ActionRowBuilder, SlashCommandSubcommandBuilder } = require('discord.js');
 const { srcRole } = require('../config.json');
 
 const apiKeyWarning = `When you press the button below, you will be prompted by a window to provide your API key from SRC.
@@ -16,7 +16,7 @@ module.exports = {
     component: 'src',
     subcommands: new Collection([
         ['verify', {
-            data: (sc) => sc
+            data: new SlashCommandSubcommandBuilder()
                 .setName('verify')
                 .setDescription('Verify your speedrun.com account'),
             component: 'src',
