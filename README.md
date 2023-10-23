@@ -109,7 +109,7 @@ module.exports = {
 
 ## `/buttons/`
 ```
-const { ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
     button: () => new ButtonBuilder(),
@@ -120,7 +120,7 @@ module.exports = {
 
 ## `/modals/`
 ```
-const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
     modal: () => new ModalBuilder(),
