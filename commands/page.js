@@ -129,7 +129,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
     else {
         // Fetch page's title, content, and path
         let data = await axios.get('http://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
-        if (data.data.errors) return reject('Received one or more errors:\n' + data.errors.map(e => e.message).join('\n'));
+        if (data.data.errors) return reject('Received one or more errors:\n' + data.data.errors.map(e => e.message).join('\n'));
         data = data.data.data.pages.single;
 
         // Parse page data
@@ -175,6 +175,7 @@ module.exports = {
             // Fetch page
             let pageId = page.id;
             page = await fetchPage(pageId).catch(e => reject(e));
+            if (!page) return;
 
             // Get subcommand name
             const subcommand = interaction.options.getSubcommand();
