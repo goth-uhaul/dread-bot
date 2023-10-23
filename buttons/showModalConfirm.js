@@ -6,9 +6,7 @@ module.exports = {
         .setLabel('Confirm')
         .setStyle(ButtonStyle.Primary),
     component: 'functionality',
-    onPressed: (interaction) => {
-        return new Promise(async (resolve, reject) => {
-            await interaction.showModal(client.modals.get(interaction.customId.slice(17)).modal());
-        });
-    }
+    onPressed: (interaction) => new Promise(async (resolve, reject) => {
+        await interaction.showModal(client.modals.get(interaction.customId.slice(17)).modal());
+    })
 };

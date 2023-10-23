@@ -7,30 +7,28 @@ module.exports = {
         .setLabel('Upvote')
         .setStyle(ButtonStyle.Primary),
     component: 'bootcamp',
-    onPressed: (interaction) => {
-        return new Promise(async (resolve, reject) => {
-            const id = interaction.customId.slice(18);
-            const userId = interaction.user.id;
-            
-            const application = await (TeacherResponses.findOne({ where: { userId: id } }));
-            const upvotes = !application.upvotes ? [] : application.upvotes.split(',');
-            const downvotes = !application.downvotes ? [] : application.downvotes.split(',');
+    onPressed: (interaction) => new Promise(async (resolve, reject) => {
+        const id = interaction.customId.slice(18);
+        const userId = interaction.user.id;
 
-            let toSend = 'You have already upvoted this application!';
+        const application = await (TeacherResponses.findOne({ where: { userId: id } }));
+        const upvotes = !application.upvotes ? [] : application.upvotes.split(',');
+        const downvotes = !application.downvotes ? [] : application.downvotes.split(',');
 
-            if (!upvotes.includes(userId)) {
-                upvotes.push(userId);
+        let toSend = 'You have already upvoted this application!';
 
-                if (downvotes.includes(userId)) {
-                    downvotes.splice(downvotes.indexOf(userId), 1);
-                    toSend = 'Vote changed!';
-                }
-                else toSend = 'Vote tallied!';
+        if (!upvotes.includes(userId)) {
+            upvotes.push(userId);
 
-                await application.update({ upvotes: upvotes.join(','), downvotes: downvotes.join(',') });
+            if (downvotes.includes(userId)) {
+                downvotes.splice(downvotes.indexOf(userId), 1);
+                toSend = 'Vote changed!';
             }
+            else toSend = 'Vote tallied!';
 
-            interaction.reply({ content: toSend, ephemeral: true });
-        });
-    }
+            await application.update({ upvotes: upvotes.join(','), downvotes: downvotes.join(',') });
+        }
+
+        interaction.reply({ content: toSend, ephemeral: true });
+    })
 };

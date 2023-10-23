@@ -201,7 +201,7 @@ module.exports = {
                             if (pages.length > 25) pages = pages.slice(0, 24);
 
                             // Return list of matching pages
-                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title }; })).then(resolve()).catch(e => reject(e));
+                            interaction.respond(pages.map(p => ({ name: p.title, value: p.title }))).then(resolve()).catch(e => reject(e));
                         });
                     }
                 }],
@@ -242,7 +242,7 @@ module.exports = {
                             if (pages.length > 25) pages = pages.slice(0, 24);
 
                             // Return list of matching pages
-                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title }; })).then(resolve()).catch(e => reject(e));
+                            interaction.respond(pages.map(p => ({ name: p.title, value: p.title }))).then(resolve()).catch(e => reject(e));
                         });
                     }
                 }]
