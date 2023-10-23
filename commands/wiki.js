@@ -36,7 +36,7 @@ const splitBody = (subsections, subsection, i) => {
 // [{ header: String, body: String?, image: String?, subsections: [{ header: String, body: String }...] }...]
 const parsePage = (content, title, path) => {
     // If page contains HTML, a tabber element, or has a section longer than 6000 characters, return with a message about the page's complexity
-    if (content.match('<h1>') || content.match('# Tabs {.tabset}') || content.split(/^#[^#]/m).find(x => x.length > 6000)) return [{ header: title, body: 'This page is too complex to display on Discord! Please view it [here](https://' + wikiDomain + '/en/' + path + ') instead.'}];
+    if (content.match('<h1>') || content.match('# Tabs {.tabset}') || content.split(/^#[^#]/m).find(x => x.length > 6000)) return [{ header: title, body: 'This page is too complex to display on Discord! Please view it [here](https://' + wikiDomain + '/en/' + path + ') instead.' }];
 
     // Remove links/grid-list elements
     // Add domain name to internal wiki links

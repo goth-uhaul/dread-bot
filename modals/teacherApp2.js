@@ -70,7 +70,7 @@ module.exports = {
 
                 let response = await (TeacherResponses.findOne({ where: { userId: interaction.user.id } }));
                 let updated = false;
-                
+
                 if (response) {
                     response = await response.update({
                         discordName: interaction.user.tag,
@@ -113,7 +113,7 @@ module.exports = {
                 const downvoteButton = client.buttons.get('applicationDownvote').button(response.userId);
 
                 const voteButtons = new ActionRowBuilder().addComponents(upvoteButton, downvoteButton);
-                
+
                 interaction.reply({ content: 'Response received!', embeds: [responseEmbed] }).then(resolve()).catch(e => reject(e));
                 client.channels.fetch(applicationChannel).then(c => c.send({ content: updated ? 'Updated Application!\n' : 'New Application!\n', embeds: [responseEmbed], components: [voteButtons] }));
             }

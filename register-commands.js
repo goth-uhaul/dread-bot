@@ -15,7 +15,8 @@ module.exports = async (commands) => {
         );
 
         console.log('Successfully reloaded application (/) commands.');
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
     }
 };

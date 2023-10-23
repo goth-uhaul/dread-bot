@@ -12,11 +12,10 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 });
 
 // Import models
-const models = fs.readdirSync(path.resolve(__dirname, './models'))
-	.map(file => {
-	    const model = require('./models/' + file);
-	    if (enabledComponents.includes(model.component)) return model.model(sequelize, Sequelize.DataTypes);
-	})
+const models = fs.readdirSync(path.resolve(__dirname, './models')).map(file => {
+    const model = require('./models/' + file);
+    if (enabledComponents.includes(model.component)) return model.model(sequelize, Sequelize.DataTypes);
+})
 	.filter(file => !!file);
 
 // Force sync command line option

@@ -53,7 +53,7 @@ module.exports = {
                 '\n\nIf you are ready to complete the second part of the form, please press the button below. This will expire in 15 minutes ()';
 
                 const button = new ActionRowBuilder().addComponents(client.buttons.get('showTeacherApp2Confirm').button('teacherApp2'));
-			    await interaction.reply({ content: messageContent, components: [button] });
+                await interaction.reply({ content: messageContent, components: [button] });
             }
         });
     }

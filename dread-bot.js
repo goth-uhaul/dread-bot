@@ -104,11 +104,10 @@ client.on('interactionCreate', async interaction => {
         if (command.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
 
         // Execute command
-        command.execute(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        command.execute(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
     // Autocomplete
     else if (interaction.isAutocomplete()) {
@@ -118,11 +117,10 @@ client.on('interactionCreate', async interaction => {
         else if (command.subcommands && interaction.options.getSubcommand(false)) command = command.subcommands.get(interaction.options.getSubcommand());
 
         // Autocomplete command
-        command.autocomplete(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        command.autocomplete(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
     // Context menus
     else if (interaction.isUserContextMenuCommand()) {
@@ -133,11 +131,10 @@ client.on('interactionCreate', async interaction => {
         if (contextMenu.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
 
         // Execute command
-        contextMenu.execute(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        contextMenu.execute(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
     // Modal submits
     else if (interaction.type === InteractionType.ModalSubmit) {
@@ -146,11 +143,10 @@ client.on('interactionCreate', async interaction => {
         const modal = client.modals.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
         // Execute command
-        modal.onSubmit(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        modal.onSubmit(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
     // Button presses
     else if (interaction.isButton()) {
@@ -159,11 +155,10 @@ client.on('interactionCreate', async interaction => {
         const button = client.buttons.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
         // Execute command
-        button.onPressed(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        button.onPressed(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
     // selectMenu submits
     else if (interaction.isAnySelectMenu()) {
@@ -172,11 +167,10 @@ client.on('interactionCreate', async interaction => {
         const selectMenu = client.selectMenus.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
         // Execute command
-        selectMenu.onSelection(interaction)
-		.catch(error => {
-		    console.error(error);
-		    interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
-		});
+        selectMenu.onSelection(interaction).catch(error => {
+            console.error(error);
+            interaction.reply({ content: 'There was an error trying to execute that command!', ephemeral: true });
+        });
     }
 });
 
