@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, Collection, ActionRowBuilder } = require('discord.js');
-const { srcRole } = require ('../config.json');
+const { srcRole } = require('../config.json');
 
 const apiKeyWarning = `When you press the button below, you will be prompted by a window to provide your API key from SRC.
 Please ensure you are logged into your SRC account, then follow [this link](<https://www.speedrun.com/settings/api>) and show/copy your key.

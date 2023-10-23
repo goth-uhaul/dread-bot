@@ -16,7 +16,7 @@ module.exports = {
         .setDescription('Gets info about the bot'),
     component: 'utility',
     execute(interaction) {
-        return new Promise (async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const embed = new EmbedBuilder()
                 .setTitle('Info about me!')
                 .setThumbnail(client.user.avatarURL())

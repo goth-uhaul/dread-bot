@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, Collection, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder } = require('discord.js');
-const { wikiDomain, graphQlDomain, contributorRole } = require ('../config.json');
+const { wikiDomain, graphQlDomain, contributorRole } = require('../config.json');
 const { wikiToken } = require('../tokens.json');
 
 // Initialize page index
