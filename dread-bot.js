@@ -47,7 +47,6 @@ for (const file of commandFiles) {
 	}
 	if (command.subcommands) command.subcommands.forEach((v, k) => enabledComponents.includes(v.component) ? command.data.addSubcommand(v.data) : command.subcommands.delete(k));
     if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
-	else delete command;
 }
 
 // Initialize local context menus
@@ -58,7 +57,6 @@ let contextMenus = fs.readdirSync('./contextMenus').filter(file => file.endsWith
 for (const file of contextMenus) {
     const contextMenu = require(`./contextMenus/${file}`);
     if (enabledComponents.includes(contextMenu.component)) client.contextMenus.set(contextMenu.data.name, contextMenu);
-	else delete contextMenu;
 }
 
 // Initialize local modals
@@ -69,7 +67,6 @@ let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'))
 for (const file of modalFiles) {
     const modal = require(`./modals/${file}`);
     if (enabledComponents.includes(modal.component)) client.modals.set(file.slice(0, -3), modal);
-	else delete modal;
 }
 
 // Initialize local buttons
@@ -80,7 +77,6 @@ let buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'
 for (const file of buttonFiles) {
     const button = require(`./buttons/${file}`);
     if (enabledComponents.includes(button.component)) client.buttons.set(file.slice(0, -3), button);
-	else delete button;
 }
 
 // Initialize local select menus
@@ -91,7 +87,6 @@ let selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWi
 for (const file of selectMenuFiles) {
     const selectMenu = require(`./selectMenus/${file}`);
     if (enabledComponents.includes(selectMenu.component)) client.selectMenus.set(file.slice(0, -3), selectMenu);
-	else delete selectMenu;
 }
 
 registerCommands(client.commands.map(c => c.data).concat(client.contextMenus.map(c => c.data)));

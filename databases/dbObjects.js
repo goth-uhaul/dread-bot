@@ -15,5 +15,4 @@ let sequelize = new Sequelize('database', 'user', 'password', {
 fs.readdirSync(path.resolve(__dirname, './models')).forEach(file => {
 	const model = require('./models/' + file);
 	if (enabledComponents.includes(model.component)) exports[file.slice(0, -3)] = model.model(sequelize, Sequelize.DataTypes);
-	else delete model;
 });

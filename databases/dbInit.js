@@ -16,7 +16,6 @@ const models = fs.readdirSync(path.resolve(__dirname, './models'))
 	.map(file => {
 		let model = require('./models/' + file);
 		if (enabledComponents.includes(model.component)) return model.model(sequelize, Sequelize.DataTypes);
-		else delete model;
 	})
 	.filter(file => !!file);
 
