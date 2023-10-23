@@ -21,7 +21,7 @@ module.exports = {
 	ownerOnly: true,
 	execute(interaction) {
 		return new Promise(async (resolve, reject) => {
-			let shouldReturn = !!interaction.options.getBoolean('return');
+			const shouldReturn = !!interaction.options.getBoolean('return');
 
 			try {
 				let evaled = await new Promise(resolve => resolve(eval(interaction.options.getString('code'))));

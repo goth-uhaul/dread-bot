@@ -13,7 +13,7 @@ global.removeWipForm = (form, timeout) => {
 }
 
 global.addWipForm = (form) => {
-	let existingForm = wipForms.findIndex(x => x.id === form.id);
+	const existingForm = wipForms.findIndex(x => x.id === form.id);
 	form.timeout = setTimeout(() => removeWipForm(this), 900000);
 
 	if (existingForm === -1) {
@@ -34,7 +34,7 @@ client.pageCache = new Collection();
 
 // Initialize local commands
 client.commands = new Collection();
-let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 // Fill local commands
 for (const file of commandFiles) {
@@ -51,7 +51,7 @@ for (const file of commandFiles) {
 
 // Initialize local context menus
 client.contextMenus = new Collection();
-let contextMenus = fs.readdirSync('./contextMenus').filter(file => file.endsWith('.js'));
+const contextMenus = fs.readdirSync('./contextMenus').filter(file => file.endsWith('.js'));
 
 // Fill local context menus
 for (const file of contextMenus) {
@@ -61,7 +61,7 @@ for (const file of contextMenus) {
 
 // Initialize local modals
 client.modals = new Collection();
-let modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'));
+const modalFiles = fs.readdirSync('./modals').filter(file => file.endsWith('.js'));
 
 // Fill local modals
 for (const file of modalFiles) {
@@ -71,7 +71,7 @@ for (const file of modalFiles) {
 
 // Initialize local buttons
 client.buttons = new Collection();
-let buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'));
+const buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'));
 
 // Fill local buttons
 for (const file of buttonFiles) {
@@ -81,7 +81,7 @@ for (const file of buttonFiles) {
 
 // Initialize local select menus
 client.selectMenus = new Collection();
-let selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWith('.js'));
+const selectMenuFiles = fs.readdirSync('./selectMenus').filter(file => file.endsWith('.js'));
 
 // Fill local select menus
 for (const file of selectMenuFiles) {
@@ -142,7 +142,7 @@ client.on('interactionCreate', async interaction => {
 	// Modal submits
 	else if (interaction.type === InteractionType.ModalSubmit) {
 		// Get local equivalent
-		let pos = interaction.customId.indexOf('_');
+		const pos = interaction.customId.indexOf('_');
 		const modal = client.modals.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command
@@ -155,7 +155,7 @@ client.on('interactionCreate', async interaction => {
 	// Button presses
 	else if (interaction.isButton()) {
 		// Get local equivalent
-		let pos = interaction.customId.indexOf('_');
+		const pos = interaction.customId.indexOf('_');
 		const button = client.buttons.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command
@@ -168,7 +168,7 @@ client.on('interactionCreate', async interaction => {
 	// selectMenu submits
 	else if (interaction.isAnySelectMenu()) {
 		// Get local equivalent
-		let pos = interaction.customId.indexOf('_');
+		const pos = interaction.customId.indexOf('_');
 		const selectMenu = client.selectMenus.get(pos === -1 ? interaction.customId : interaction.customId.slice(0, pos));
 
 		// Execute command

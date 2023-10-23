@@ -17,7 +17,7 @@ const blockquoteEmojis = {
 // Split fields longer than 1024 characters into multiple fields
 const splitBody = (subsections, subsection, i) => {
     if (subsection.body && subsection.body.length > 1024) {
-        let subsectionClone = {};
+        const subsectionClone = {};
         Object.assign(subsectionClone, subsection);
 
         subsectionClone.body = subsectionClone.body.slice(0, 1013) + '.. (cont.)';
@@ -55,7 +55,7 @@ const parsePage = (content, title, path) => {
     // Map section text to objects
     sections = sections.map(x => {
         let split = x.split('\n');
-        let section = {};
+        const section = {};
 
         // Trim, then store first line as header
         if (!split[0]) split.shift();
@@ -79,8 +79,8 @@ const parsePage = (content, title, path) => {
         // Map subsection text to objects
         let subsections = [];
         section.subsections.forEach(y => {
-            let split = y.split('\n');
-            let subsection = {};
+            const split = y.split('\n');
+            const subsection = {};
 
             // Store first line as header
             subsection.header = split.shift();
@@ -102,7 +102,7 @@ const parsePage = (content, title, path) => {
 
 // Convert page section object to Discord embed
 const sectionToEmbed = (section) => {
-    let embed = new EmbedBuilder().setTitle(section.header);
+    const embed = new EmbedBuilder().setTitle(section.header);
     if (section.body) embed.setDescription(section.body);
     if (section.image) embed.setImage(section.image);
     if (section.subsections) section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
@@ -122,7 +122,7 @@ const listPages = (elements) => new Promise((resolve, reject) => axios.get('http
 // Fetch specific wiki page
 const fetchPage = (id) => new Promise(async (resolve, reject) => {
     // Try cache first
-    let page = client.pageCache.get(id);
+    const page = client.pageCache.get(id);
 
     // If page exists in the cache and is less than 10 minutes old, return it, otherwise fetch page
     if (page && Date.now() - page.timestamp < 600000) return resolve(page);
@@ -182,7 +182,7 @@ module.exports = {
                             if (!page) return interaction.reply({ content: 'No page found!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
                             // Fetch page
-                            let pageId = page.id;
+                            const pageId = page.id;
                             page = await fetchPage(pageId).catch(e => reject(e));
                             if (!page) return;
 
@@ -219,11 +219,11 @@ module.exports = {
                             if (!page) return interaction.reply({ content: 'No page found!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
                             // Fetch page
-                            let pageId = page.id;
+                            const pageId = page.id;
                             page = await fetchPage(pageId).catch(e => reject(e));
 
                             // Construct embed
-                            let toSend = { embeds: [sectionToEmbed(page.content[0])] };
+                            const toSend = { embeds: [sectionToEmbed(page.content[0])] };
                             // If page has multiple sections, add buttons to tab through sections
                             if (page.content.length > 1) toSend.components = [new ActionRowBuilder().addComponents(client.buttons.get('pageBack').button(pageId).setDisabled(true), client.buttons.get('pageForward').button(pageId))];
 
@@ -260,7 +260,7 @@ module.exports = {
                     await interaction.guild.roles.fetch();
                     if (interaction.member.roles.cache.has(contributorRole)) return interaction.reply({ content: 'You already have the contributor role!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
-                    let user = await fetchUser(interaction.user.id);
+                    const user = await fetchUser(interaction.user.id);
                     if (!user) return interaction.reply({ content: 'No user found!', ephemeral: true }).then(resolve()).catch(e => reject(e));
 
                     await interaction.member.roles.add(contributorRole).catch(e => reject(e));

@@ -9,12 +9,12 @@ module.exports = {
     component: 'bootcamp',
     onPressed: (interaction) => {
         return new Promise(async (resolve, reject) => {
-            let id = interaction.customId.slice(18);
-            let userId = interaction.user.id;
+            const id = interaction.customId.slice(18);
+            const userId = interaction.user.id;
             
             const application = await (TeacherResponses.findOne({ where: { userId: id } }));
-            let upvotes = !application.upvotes ? [] : application.upvotes.split(',');
-            let downvotes = !application.downvotes ? [] : application.downvotes.split(',');
+            const upvotes = !application.upvotes ? [] : application.upvotes.split(',');
+            const downvotes = !application.downvotes ? [] : application.downvotes.split(',');
 
             let toSend = 'You have already upvoted this application!';
 

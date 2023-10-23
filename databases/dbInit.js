@@ -4,7 +4,7 @@ const path = require('path');
 const { enabledComponents } = require('../config.json');
 
 // Initialize sequelize
-let sequelize = new Sequelize('database', 'user', 'password', {
+const sequelize = new Sequelize('database', 'user', 'password', {
 	host: 'localhost',
 	dialect: 'sqlite',
 	logging: false,
@@ -14,7 +14,7 @@ let sequelize = new Sequelize('database', 'user', 'password', {
 // Import models
 const models = fs.readdirSync(path.resolve(__dirname, './models'))
 	.map(file => {
-		let model = require('./models/' + file);
+		const model = require('./models/' + file);
 		if (enabledComponents.includes(model.component)) return model.model(sequelize, Sequelize.DataTypes);
 	})
 	.filter(file => !!file);

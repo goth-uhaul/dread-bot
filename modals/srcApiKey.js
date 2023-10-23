@@ -2,7 +2,7 @@ const axios = require("axios");
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
 const { srcRole } = require('../config.json');
 
-let apiKeyInput = new TextInputBuilder()
+const apiKeyInput = new TextInputBuilder()
     .setCustomId('apiKeyInput')
     .setLabel('Please enter your speedrun.com API key.')
     .setStyle(TextInputStyle.Short)

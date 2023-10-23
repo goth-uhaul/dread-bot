@@ -4,7 +4,7 @@ const path = require('path');
 const { enabledComponents } = require('../config.json');
 
 // Initialize sequelize
-let sequelize = new Sequelize('database', 'user', 'password', {
+const sequelize = new Sequelize('database', 'user', 'password', {
 	host: 'localhost',
 	dialect: 'sqlite',
 	logging: false,

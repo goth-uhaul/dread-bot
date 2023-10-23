@@ -1,6 +1,6 @@
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js");
 
-let topicInput = new TextInputBuilder()
+const topicInput = new TextInputBuilder()
     .setCustomId('channelTopicTopic')
     .setLabel('Please write the new channel topic below.')
     .setStyle(TextInputStyle.Paragraph)

@@ -17,7 +17,7 @@ module.exports = {
     component: 'utility',
     execute(interaction) {
         return new Promise (async (resolve, reject) => {
-            let embed = new EmbedBuilder()
+            const embed = new EmbedBuilder()
                 .setTitle('Info about me!')
                 .setThumbnail(client.user.avatarURL())
                 .addFields(

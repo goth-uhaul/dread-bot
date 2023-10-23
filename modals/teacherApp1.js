@@ -1,20 +1,20 @@
 const { ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle } = require("discord.js");
 
-let srcNameInput = new TextInputBuilder()
+const srcNameInput = new TextInputBuilder()
     .setCustomId('teacherAppSrcName')
     .setLabel('What is your username on speedrun.com?')
     .setStyle(TextInputStyle.Short)
     .setRequired(true)
     .setMaxLength(50);
 
-let timeRunningInput = new TextInputBuilder()
+const timeRunningInput = new TextInputBuilder()
     .setCustomId('teacherAppTimeRunning')
     .setLabel('How long have you been running Metroid Dread?')
     .setStyle(TextInputStyle.Short)
     .setRequired(true)
     .setMaxLength(300);
 
-let hardwareInput = new TextInputBuilder()
+const hardwareInput = new TextInputBuilder()
     .setCustomId('teacherAppHardware')
     .setLabel('Do you have an easy way to stream to Discord?')
     .setStyle(TextInputStyle.Short)
@@ -33,7 +33,7 @@ module.exports = {
     component: 'bootcamp',
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
-            let form = wipForms.find(x => x.id === interaction.user.id);
+            const form = wipForms.find(x => x.id === interaction.user.id);
 
             if (!form) {
                 const messageContent = 'The form has expired! Please use `/apply` and start again. So you don\'t lose them, here were the responses you just submitted:\n' +

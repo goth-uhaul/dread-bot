@@ -3,35 +3,35 @@ const { applicationChannel, positions } = require('../config.json');
 const { TeacherResponses } = require('../databases/dbObjects.js');
 const { applicationEmbed } = require("../utils/applicationUtils");
 
-let strengthInput = new TextInputBuilder()
+const strengthInput = new TextInputBuilder()
     .setCustomId('teacherAppStrength')
     .setLabel('What\'s your biggest strength in speedrunning?')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMaxLength(1000);
 
-let weaknessInput = new TextInputBuilder()
+const weaknessInput = new TextInputBuilder()
     .setCustomId('teacherAppWeakness')
     .setLabel('What\'s your biggest weakness in speedrunning?')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMaxLength(1000);
 
-let backupStratsInput = new TextInputBuilder()
+const backupStratsInput = new TextInputBuilder()
     .setCustomId('teacherAppBackupStrats')
     .setLabel('How many backup strats can you teach?')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMaxLength(1000);
 
-let otherStratsInput = new TextInputBuilder()
+const otherStratsInput = new TextInputBuilder()
     .setCustomId('teacherAppOtherStrats')
     .setLabel('Can you teach strats that you don\'t use?')
     .setStyle(TextInputStyle.Paragraph)
     .setRequired(true)
     .setMaxLength(1000);
 
-let commentsInput = new TextInputBuilder()
+const commentsInput = new TextInputBuilder()
     .setCustomId('teacherAppComments')
     .setLabel('Please put any additional comments below.')
     .setStyle(TextInputStyle.Paragraph)
@@ -53,7 +53,7 @@ module.exports = {
     component: 'bootcamp',
     onSubmit(interaction) {
         return new Promise(async (resolve, reject) => {
-            let form = wipForms.find(x => x.id === interaction.user.id);
+            const form = wipForms.find(x => x.id === interaction.user.id);
 
             if (!form) {
                 const messageContent = 'The form has expired! Please use `/apply` and start again. So you don\'t lose them, here were the responses you just submitted:\n' +
