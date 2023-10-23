@@ -10,7 +10,7 @@ module.exports = {
     ownerOnly: true,
     execute(interaction) {
         return new Promise(async (resolve, reject) => {
-            const { err, stdout } = await execAsync('git fetch --all && git reset --hard origin/main');
+            const { err } = await execAsync('git fetch --all && git reset --hard origin/main');
             if (err) {
                 return interaction.reply(err.message).then(resolve()).catch((e) => reject(e));
             }
