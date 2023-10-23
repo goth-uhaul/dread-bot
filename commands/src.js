@@ -13,6 +13,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('src')
         .setDescription('Verify your accounts on external services'),
+    component: 'src',
     subcommands: new Collection([
         ['verify', {
             data: (sc) =>
