@@ -39,11 +39,14 @@ let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.j
 // Fill local commands
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-	if (command.subcommands) {
-		command.subcommands.forEach((v, k) => enabledComponents.includes(v.component) ? command.data.addSubcommand(v.data) : command.subcommands.delete(k));
-		client.commands.set(command.data.name, command);
+	if (command.subcommandGroups) {
+		command.subcommandGroups.forEach((v, k) => {
+			v.subcommands.forEach((vv, kk) => enabledComponents.includes(vv.component) ? v.data.addSubcommand(vv.data) : v.data.delete(kk));
+			enabledComponents.includes(v.component) ? command.data.addSubcommandGroup(v.data) : command.subcommandGroups.delete(k);
+		});
 	}
-    else if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
+	if (command.subcommands) command.subcommands.forEach((v, k) => enabledComponents.includes(v.component) ? command.data.addSubcommand(v.data) : command.subcommands.delete(k));
+    if (enabledComponents.includes(command.component)) client.commands.set(command.data.name, command);
 	else delete command;
 }
 
@@ -99,7 +102,8 @@ client.on('interactionCreate', async interaction => {
 	if (interaction.isChatInputCommand()) {
 		// Get local equivalent and find subcommand
 		let command = client.commands.get(interaction.commandName);
-		if (command.subcommands) command = command.subcommands.get(interaction.options.getSubcommand());
+		if (command.subcommandGroups && interaction.options.getSubcommandGroup(false)) command = command.subcommandGroups.get(interaction.options.getSubcommandGroup()).subcommands.get(interaction.options.getSubcommand());
+		else if (command.subcommands && interaction.options.getSubcommand(false)) command = command.subcommands.get(interaction.options.getSubcommand());
 
 		// Restrict owner only commands
 		if (command.ownerOnly && !owners.includes(interaction.user.id)) return interaction.reply({ content: 'Only the bot owners can use this command!', ephemeral: true });
@@ -114,7 +118,9 @@ client.on('interactionCreate', async interaction => {
 	// Autocomplete
 	else if (interaction.isAutocomplete()) {
 		// Get local equivalent
-		const command = client.commands.get(interaction.commandName);
+		let command = client.commands.get(interaction.commandName);
+		if (command.subcommandGroups && interaction.options.getSubcommandGroup(false)) command = command.subcommandGroups.get(interaction.options.getSubcommandGroup()).subcommands.get(interaction.options.getSubcommand());
+		else if (command.subcommands && interaction.options.getSubcommand(false)) command = command.subcommands.get(interaction.options.getSubcommand());
 
 		// Autocomplete command
 		command.autocomplete(interaction)
