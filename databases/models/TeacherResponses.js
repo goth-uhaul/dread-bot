@@ -18,7 +18,7 @@ module.exports = {
             upvotes: DataTypes.TEXT,
             downvotes: DataTypes.TEXT,
             status: DataTypes.STRING
-        })
+        });
     },
     component: 'bootcamp'
-}
+};

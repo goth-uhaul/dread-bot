@@ -10,7 +10,7 @@ global.wipForms = [];
 global.removeWipForm = (form, timeout) => {
 	if (timeout) clearTimeout(form.timeout);
 	return wipForms.splice(wipForms.indexOf(form), 1);
-}
+};
 
 global.addWipForm = (form) => {
 	const existingForm = wipForms.findIndex(x => x.id === form.id);
@@ -20,7 +20,7 @@ global.addWipForm = (form) => {
 		return wipForms.push(form);
 	}
 	else wipForms[existingForm] = form;
-}
+};
 
 // Initialize client
 global.client = new Client({

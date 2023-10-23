@@ -7,7 +7,7 @@ const sectionToEmbed = (section) => {
     if (section.subsections) section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
 
     return embed;
-}
+};
 
 module.exports = {
     button: (id) => new ButtonBuilder()

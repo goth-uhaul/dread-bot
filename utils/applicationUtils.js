@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     applicationEmbed: (response) => {
@@ -14,6 +14,6 @@ module.exports = {
             { name: 'Backup Strats', value: response.backupStrats },
             { name: 'Other Strats', value: response.otherStrats },
             { name: 'Comments', value: response.comments }
-        )
+        );
     }
-}
+};

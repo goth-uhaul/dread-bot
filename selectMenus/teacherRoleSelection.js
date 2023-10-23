@@ -1,7 +1,7 @@
 const { SelectMenuBuilder } = require('discord.js');
 const { positions } = require('../config.json');
 
-const getRolesOptions = () => positions.map(role => { return { label: role.label, description: role.description, value: role.value } });
+const getRolesOptions = () => positions.map(role => { return { label: role.label, description: role.description, value: role.value }; });
 
 module.exports = {
     selectMenu: () => new SelectMenuBuilder()

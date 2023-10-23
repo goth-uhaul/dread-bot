@@ -7,8 +7,8 @@ const uptime = () => {
     const seconds = Math.floor((client.uptime - days - hours - minutes) / 1000) * 1000;
     const milliseconds = Math.floor(client.uptime - days - hours - minutes - seconds);
 
-    return `${days / 86400000}d ${hours / 3600000}h ${minutes / 60000}m ${seconds / 1000}s ${milliseconds}ms`
-}
+    return `${days / 86400000}d ${hours / 3600000}h ${minutes / 60000}m ${seconds / 1000}s ${milliseconds}ms`;
+};
 
 module.exports = {
     data: new SlashCommandBuilder()

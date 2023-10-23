@@ -30,7 +30,7 @@ const splitBody = (subsections, subsection, i) => {
         if (subsections[0] !== subsection) subsections.push(subsection);
         return subsections;
     }
-}
+};
 
 // Parse raw page content into an array of sections, in the format of:
 // [{ header: String, body: String?, image: String?, subsections: [{ header: String, body: String }...] }...]
@@ -65,7 +65,7 @@ const parsePage = (content, title, path) => {
         split = split.filter(x => {
             const matches = x.match(/!\[.+\]\((.+?)\)/);
 
-            if (matches && !section.image) section.image = matches[1]
+            if (matches && !section.image) section.image = matches[1];
             else return true;
         });
 
@@ -98,7 +98,7 @@ const parsePage = (content, title, path) => {
     });
 
     return sections;
-}
+};
 
 // Convert page section object to Discord embed
 const sectionToEmbed = (section) => {
@@ -108,7 +108,7 @@ const sectionToEmbed = (section) => {
     if (section.subsections) section.subsections.map(x => embed.addFields({ name: x.header, value: x.body ? x.body : '\u200b' }));
 
     return embed;
-}
+};
 
 // Construct GraphQL queries
 const singleQuery = (id, elements) => '{pages{single(id:' + id + '){' + elements.join(' ') + '}}}';
@@ -136,7 +136,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
         const pageContent = parsePage(data.content, data.title, data.path);
 
         // Add to cache and return page data
-        const pageData = { content: pageContent, path: data.path, timestamp: Date.now() }
+        const pageData = { content: pageContent, path: data.path, timestamp: Date.now() };
         client.pageCache.set(id, pageData);
         return resolve(pageData);
     }
@@ -153,7 +153,7 @@ setInterval(fetchPageIndex, 600000);
 const pageOption = (option) => option.setName('page').setDescription('Name of page to search for').setRequired(true).setAutocomplete(true);
 
 // Functions to fetch wiki user
-const userQuery = (id) => '{users{singleByProviderId(providerId:"' + id + '"){id,providerId,name,providerName}}}'
+const userQuery = (id) => '{users{singleByProviderId(providerId:"' + id + '"){id,providerId,name,providerName}}}';
 const fetchUser = (id) => new Promise((resolve) => axios.get('http://' + graphQlDomain + '/graphql?query=' + userQuery(id), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.users.singleByProviderId)));
 
 module.exports = {
@@ -201,7 +201,7 @@ module.exports = {
                             if (pages.length > 25) pages = pages.slice(0, 24);
 
                             // Return list of matching pages
-                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title } })).then(resolve()).catch(e => reject(e));
+                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title }; })).then(resolve()).catch(e => reject(e));
                         });
                     }
                 }],
@@ -242,7 +242,7 @@ module.exports = {
                             if (pages.length > 25) pages = pages.slice(0, 24);
 
                             // Return list of matching pages
-                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title } })).then(resolve()).catch(e => reject(e));
+                            interaction.respond(pages.map(p => { return { name: p.title, value: p.title }; })).then(resolve()).catch(e => reject(e));
                         });
                     }
                 }]

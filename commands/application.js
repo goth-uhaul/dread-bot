@@ -27,7 +27,7 @@ module.exports = {
             let responses = await TeacherResponses.findAll();
             responses = responses.filter(r => r.userId.includes(user) || r.discordName.includes(user) || r.srcName.includes(user));
 
-            interaction.respond(responses.map(r => { return { name: r.discordName, value: r.userId } })).then(resolve()).catch(e => reject(e));
+            interaction.respond(responses.map(r => { return { name: r.discordName, value: r.userId }; })).then(resolve()).catch(e => reject(e));
         });
     }
 };

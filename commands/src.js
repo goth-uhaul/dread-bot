@@ -7,7 +7,7 @@ Please ensure you are logged into your SRC account, then follow [this link](<htt
 Note that anyone who gains access to this key will gain full access to your SRC account, so only post it in the pop-up window!
 
 The bot will only use your key to check that your SRC account exists; your key is never saved. This can be verified by checking the source code [here](<https://github.com/MayberryZoom/dread-bot/blob/main/modals/srcApiKey.js>).
-If you still don't feel comfortable sharing your API key, feel free to dismiss this message.`
+If you still don't feel comfortable sharing your API key, feel free to dismiss this message.`;
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -7,7 +7,7 @@ const apiKeyInput = new TextInputBuilder()
     .setLabel('Please enter your speedrun.com API key.')
     .setStyle(TextInputStyle.Short)
     .setMaxLength(1024)
-    .setRequired(true)
+    .setRequired(true);
 
 const apiKeyInputRow = new ActionRowBuilder().addComponents(apiKeyInput);
 
@@ -29,7 +29,7 @@ module.exports = {
                 const res = await interaction.member.roles.add(srcRole).catch(e => reject(e));
                 if (res) interaction.reply('Account verified! You should now have the SRC Verified role.').then(resolve()).catch(e => reject(e));
             }
-            else interaction.reply({ content: 'You must have a verified run of Metroid Dread to receive the SRC Verified role.', ephemeral: true }).then(resolve()).catch(e => reject(e));;
+            else interaction.reply({ content: 'You must have a verified run of Metroid Dread to receive the SRC Verified role.', ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
     }
 };

@@ -7,7 +7,7 @@ const formatRoles = (roles) => {
         const lastElement = roles.pop();
         return roles.map(r => '@' + r + ', ').join() + '@' + lastElement;
     }
-}
+};
 
 module.exports = {
     selectMenu: (id) => new RoleSelectMenuBuilder()

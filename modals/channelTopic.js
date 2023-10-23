@@ -5,7 +5,7 @@ const topicInput = new TextInputBuilder()
     .setLabel('Please write the new channel topic below.')
     .setStyle(TextInputStyle.Paragraph)
     .setMaxLength(1024)
-    .setRequired(true)
+    .setRequired(true);
 
 const topicActionRow = new ActionRowBuilder().addComponents(topicInput);
 
