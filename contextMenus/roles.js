@@ -15,7 +15,7 @@ module.exports = {
             const addRoleSelection = new ActionRowBuilder().addComponents(client.selectMenus.get('addUserRolesSelection').selectMenu(interaction.targetUser.id));
             const removeRoleSelection = new ActionRowBuilder().addComponents(client.selectMenus.get('removeUserRolesSelection').selectMenu(interaction.targetUser.id));
 
-			await interaction.reply({ content: 'Select ' + interaction.targetUser.toString() + '\'s roles.' , components: [addRoleSelection, removeRoleSelection], ephemeral: true }).then(resolve()).catch(e => reject(e));
+            await interaction.reply({ content: 'Select ' + interaction.targetUser.toString() + '\'s roles.' , components: [addRoleSelection, removeRoleSelection], ephemeral: true }).then(resolve()).catch(e => reject(e));
         });
     },
 };

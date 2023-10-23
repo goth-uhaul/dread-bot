@@ -20,12 +20,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('apply')
 		.setDescription('Apply to be a bootcamp teacher'),
-	component: 'bootcamp',
-	execute(interaction) {
-		return new Promise(async (resolve, reject) => {
-			const selection = new ActionRowBuilder().addComponents(client.selectMenus.get('teacherRoleSelection').selectMenu());
+    component: 'bootcamp',
+    execute(interaction) {
+        return new Promise(async (resolve, reject) => {
+            const selection = new ActionRowBuilder().addComponents(client.selectMenus.get('teacherRoleSelection').selectMenu());
 
-			await interaction.reply({ content: messageContent , components: [selection] }).then(resolve()).catch(e => reject(e));
-		});
-	}
+            await interaction.reply({ content: messageContent , components: [selection] }).then(resolve()).catch(e => reject(e));
+        });
+    }
 };

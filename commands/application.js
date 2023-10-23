@@ -12,14 +12,14 @@ module.exports = {
             .setRequired(true)
             .setAutocomplete(true)),
     component: 'bootcamp',
-	execute(interaction) {
-		return new Promise(async (resolve, reject) => {
-			const response = await (TeacherResponses.findOne({ where: { userId: interaction.options.getString('user') } }));
+    execute(interaction) {
+        return new Promise(async (resolve, reject) => {
+            const response = await (TeacherResponses.findOne({ where: { userId: interaction.options.getString('user') } }));
             if (!response) return interaction.reply({ content: 'No application found!', ephemeral: true });
 
             interaction.reply({ content: 'Application Found!', embeds: [applicationEmbed(response)] }).then(resolve()).catch(e => reject(e));
-		});
-	},
+        });
+    },
     autocomplete(interaction) {
         return new Promise(async (resolve, reject) => {
             const user = interaction.options.getString('user');
