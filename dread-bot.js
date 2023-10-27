@@ -1,8 +1,9 @@
 const fs = require('fs');
-const { InteractionType, Client, Collection, GatewayIntentBits } = require('discord.js');
+const { InteractionType, Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { discordToken } = require('./tokens.json');
-const { owners, enabledComponents } = require('./config.json');
+const { owners, enabledComponents, streamsChannel } = require('./config.json');
 const registerCommands = require('./register-commands.js');
+const { streamEmbed } = require('./utils/activityUtils');
 
 // Temp storage for 2 part forms
 global.wipForms = [];
@@ -24,7 +25,7 @@ global.addWipForm = (form) => {
 
 // Initialize client
 global.client = new Client({
-    intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers ],
+    intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildPresences ],
     allowedMentions: { parse: ['users'], repliedUser: true },
     rest: { rejectOnRateLimit: ['/channels'] }
 });
@@ -173,6 +174,16 @@ client.on('interactionCreate', interaction => {
         });
     }
 });
+
+if (enabledComponents.includes('streams')) {
+    client.on('presenceUpdate', (oldPresence, newPresence) => {
+        newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread')
+            .forEach(stream => {
+                client.channels.fetch(streamsChannel)
+                    .then(c => c.send({ embeds: [streamEmbed(stream, newPresence.user)] }));
+            });
+    });
+}
 
 // Log on successful login
 client.once('ready', () => {
