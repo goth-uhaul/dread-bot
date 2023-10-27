@@ -4,6 +4,7 @@ const { discordToken } = require('./tokens.json');
 const { owners, enabledComponents, streamsChannel } = require('./config.json');
 const registerCommands = require('./register-commands.js');
 const { streamEmbed } = require('./utils/activityUtils');
+const { StreamBlacklist } = require('./databases/dbObjects.js');
 
 // Temp storage for 2 part forms
 global.wipForms = [];
@@ -176,12 +177,17 @@ client.on('interactionCreate', interaction => {
 });
 
 if (enabledComponents.includes('streams')) {
-    client.on('presenceUpdate', (oldPresence, newPresence) => {
-        newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread')
-            .forEach(stream => {
-                client.channels.fetch(streamsChannel)
-                    .then(c => c.send({ embeds: [streamEmbed(stream, newPresence.user)] }));
-            });
+    client.on('presenceUpdate', async (oldPresence, newPresence) => {
+        const streams = newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread');
+        if (streams) {
+            const user = await StreamBlacklist.findOne({ where: { userId: newPresence.user.id } });
+            if (!user) {
+                streams.forEach(stream => {
+                    client.channels.fetch(streamsChannel)
+                        .then(c => c.send({ embeds: [streamEmbed(stream, newPresence.user)] }));
+                });
+            }
+        }
     });
 }
 
