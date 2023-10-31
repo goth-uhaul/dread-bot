@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { InteractionType, Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { discordToken } = require('./tokens.json');
-const { owners, enabledComponents, streamsChannel } = require('./config.json');
+const { owners, enabledComponents, streamsChannel, streamingRole } = require('./config.json');
 const registerCommands = require('./register-commands.js');
 const { streamEmbed } = require('./utils/activityUtils');
 const { StreamBlacklist } = require('./databases/dbObjects.js');
@@ -177,16 +177,27 @@ client.on('interactionCreate', interaction => {
 });
 
 if (enabledComponents.includes('streams')) {
+    const objectsArrayEquals = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) return false;
+        else return arr1.every((x, i) => JSON.stringify(x) === JSON.stringify(arr2[i]));
+    };
+
     client.on('presenceUpdate', async (oldPresence, newPresence) => {
         const streams = newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread');
-        if (streams) {
-            const user = await StreamBlacklist.findOne({ where: { userId: newPresence.user.id } });
-            if (!user) {
-                streams.forEach(stream => {
-                    client.channels.fetch(streamsChannel)
-                        .then(c => c.send({ embeds: [streamEmbed(stream, newPresence.user)] }));
-                });
+        if (streams.length > 0) {
+            if (!oldPresence || !objectsArrayEquals(streams, oldPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread'))) {
+                const user = await StreamBlacklist.findOne({ where: { userId: newPresence.user.id } });
+                if (!user) {
+                    streams.forEach(stream => {
+                        client.channels.fetch(streamsChannel)
+                            .then(c => c.send({ embeds: [streamEmbed(stream, newPresence.user)] }));
+                    });
+                    newPresence.member.roles.add(streamingRole);
+                }
             }
+        }
+        else if (oldPresence && oldPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread').length > 0) {
+            newPresence.member.roles.remove(streamingRole);
         }
     });
 }
