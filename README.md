@@ -86,7 +86,7 @@ module.exports = {
             component: '',
             execute(interaction) {
                 return new Promise((resolve, reject) => {});
-            }
+            },
             // Optional
             autocomplete(interaction) {
                 return new Promise((resolve, reject) => {});
