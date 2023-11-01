@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { InteractionType, Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { discordToken } = require('./tokens.json');
-const { owners, enabledComponents, streamsChannel, streamingRole } = require('./config.json');
+const { owners, enabledComponents, dreadServer, streamsChannel, streamingRole } = require('./config.json');
 const registerCommands = require('./register-commands.js');
 const { streamEmbed } = require('./utils/activityUtils');
 const { StreamBlacklist } = require('./databases/dbObjects.js');
@@ -183,6 +183,7 @@ if (enabledComponents.includes('streams')) {
     };
 
     client.on('presenceUpdate', async (oldPresence, newPresence) => {
+        if (newPresence.guild.id !== dreadServer) return;
         const streams = newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread');
         if (streams.length > 0) {
             if (!oldPresence || !objectsArrayEquals(streams, oldPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread'))) {
