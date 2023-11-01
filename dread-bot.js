@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { InteractionType, Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
+const { InteractionType, Client, Collection, GatewayIntentBits, ActivityType, Events } = require('discord.js');
 const { discordToken } = require('./tokens.json');
 const { owners, enabledComponents, dreadServer, streamsChannel, streamingRole } = require('./config.json');
 const registerCommands = require('./register-commands.js');
@@ -94,7 +94,7 @@ for (const file of selectMenuFiles) {
 registerCommands(client.commands.map(c => c.data).concat(client.contextMenus.map(c => c.data)));
 
 // Interaction handler
-client.on('interactionCreate', interaction => {
+client.on(Events.InteractionCreate, interaction => {
     // Slash commands
     if (interaction.isChatInputCommand()) {
         // Get local equivalent and find subcommand
@@ -182,7 +182,7 @@ if (enabledComponents.includes('streams')) {
         else return arr1.every((x, i) => JSON.stringify(x) === JSON.stringify(arr2[i]));
     };
 
-    client.on('presenceUpdate', async (oldPresence, newPresence) => {
+    client.on(Events.PresenceUpdate, async (oldPresence, newPresence) => {
         if (newPresence.guild.id !== dreadServer) return;
         const streams = newPresence.activities.filter(activity => activity.type === ActivityType.Streaming && activity.state === 'Metroid Dread');
         if (streams.length > 0) {
@@ -204,7 +204,7 @@ if (enabledComponents.includes('streams')) {
 }
 
 // Log on successful login
-client.once('ready', () => {
+client.once(Events.ClientReady, () => {
     console.log('Interaction handling ready!');
 });
 
