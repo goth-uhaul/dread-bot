@@ -1,8 +1,11 @@
 # Dread Bot
-A Discord bot specifically made for the Metroid Dread speedrunning [Discord server](https://discord.gg/BdmYr5TRGT).
+
+A Discord bot specifically made for the Metroid Dread Speedrunning [Discord server](https://discord.gg/BdmYr5TRGT).
 
 # Set-Up
+
 To get the bot running, you should set up the following in `config.json`:
+
 ```
 {
 	"enabledComponents": ["functionality"], // array of strings, containing enabled bot components
@@ -23,20 +26,26 @@ To get the bot running, you should set up the following in `config.json`:
 	]
 }
 ```
+
 The bot components can be: functionality, utility, wiki, moderation, src, streams, bootcamp. **Never disable the functionality component.**
 
 As well, please generate a Discord token, and if using the wiki component, a Wiki.JS API key. These should go into `tokens.json` in the following format:
+
 ```
 {
     "discordToken": "",
     "wikiToken": ""
 }
 ```
+
 Finally, run `databases/dbInit.js` in order to initialize the bot's databases.
 
 # Template Files
+
 ## `/commands/`
+
 Simple command:
+
 ```
 const { SlashCommandBuilder } = require('discord.js');
 
@@ -52,7 +61,9 @@ module.exports = {
     }
 };
 ```
+
 Command with subcommands/subcommand groups:
+
 ```
 const { SlashCommandBuilder, Collection, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder } = require('discord.js');
 
@@ -97,6 +108,7 @@ module.exports = {
 ```
 
 ## `/contextMenus/`
+
 ```
 const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 
@@ -110,6 +122,7 @@ module.exports = {
 ```
 
 ## `/buttons/`
+
 ```
 const { ButtonBuilder, ButtonStyle } = require('discord.js');
 
@@ -121,6 +134,7 @@ module.exports = {
 ```
 
 ## `/modals/`
+
 ```
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
@@ -134,6 +148,7 @@ module.exports = {
 ```
 
 ## `/selectMenus/`
+
 ```
 const { SelectMenuBuilder } = require('discord.js');
 
@@ -146,6 +161,7 @@ module.exports = {
 ```
 
 ## `/databases/models/`
+
 ```
 module.exports = (sequelize, DataTypes) => return sequelize.define();
 ```
