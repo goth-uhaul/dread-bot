@@ -1,5 +1,5 @@
 # Dread Bot
-A Discord bot specifically made for the Metroid Dread speedrunning [Discord server](https://discord.gg/BdmYr5TRGT).
+A Discord bot specifically made for the Metroid Dread Speedrunning [Discord server](https://discord.gg/BdmYr5TRGT).
 
 # Set-Up
 To get the bot running, you should set up the following in `config.json`:

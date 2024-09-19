@@ -115,7 +115,7 @@ const singleQuery = (id, elements) => '{pages{single(id:' + id + '){' + elements
 const listQuery = (elements) => '{pages{list{' + elements.join(' ') + '}}}';
 
 // Fetch list of pages
-const listPages = (elements) => new Promise((resolve, reject) => axios.get('http://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } })
+const listPages = (elements) => new Promise((resolve, reject) => axios.get('https://' + graphQlDomain + '/graphql?query=' + listQuery(elements), { headers: { 'Authorization': 'Bearer ' + wikiToken } })
     .then(res => res.data.errors ? reject('Received one or more errors:\n\t- ' + res.data.errors.map(e => e.message).join('\n\t- ')) : resolve(res.data.data.pages.list))
     .catch(e => reject(e)));
 
@@ -128,7 +128,7 @@ const fetchPage = (id) => new Promise(async (resolve, reject) => {
     if (page && Date.now() - page.timestamp < 600000) return resolve(page);
     else {
         // Fetch page's title, content, and path
-        let data = await axios.get('http://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
+        let data = await axios.get('https://' + graphQlDomain + '/graphql?query=' + singleQuery(id, ['title', 'content', 'path']), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).catch(e => reject(e));
         if (data.data.errors) return reject('Received one or more errors:\n' + data.data.errors.map(e => e.message).join('\n'));
         data = data.data.data.pages.single;
 
@@ -154,7 +154,7 @@ const pageOption = (option) => option.setName('page').setDescription('Name of pa
 
 // Functions to fetch wiki user
 const userQuery = (id) => '{users{singleByProviderId(providerId:"' + id + '"){id,providerId,name,providerName}}}';
-const fetchUser = (id) => new Promise((resolve) => axios.get('http://' + graphQlDomain + '/graphql?query=' + userQuery(id), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.users.singleByProviderId)));
+const fetchUser = (id) => new Promise((resolve) => axios.get('https://' + graphQlDomain + '/graphql?query=' + userQuery(id), { headers: { 'Authorization': 'Bearer ' + wikiToken } }).then(res => resolve(res.data.data.users.singleByProviderId)));
 
 module.exports = {
     data: new SlashCommandBuilder()
