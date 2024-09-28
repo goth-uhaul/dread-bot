@@ -1,6 +1,6 @@
 {
   "name": "dread-bot",
-  "version": "2.4.1",
+  "version": "2.4.3",
   "description": "A Discord bot specifically made for the Metroid Dread speedrunning [Discord server](https://discord.gg/BdmYr5TRGT).",
   "main": "dread-bot.js",
   "scripts": {},
