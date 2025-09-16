@@ -14,16 +14,10 @@ To get the bot running, you should set up the following in `config.json`:
     "srcRole": "", // ID of SRC verified role here (for /src verify)
     "moderatorRole": "", // ID of moderator role here (for moderation commands)
 	"streamsChannel": "", // ID of channel for streams to be posted in
-	"streamingRole": "", // ID of role for streaming users to be given
-	"applicationChannel": "", // ID of channel to send teacher applications to here
-	"positions": [
-		// array of objects, representing teacher positions. these are in the following format:
-		// label: position name, description: description of position (use \u200b to leave empty), value: ID of corresponding teacher role
-		{ "label": "", "description": "", "value": "" },
-	]
+	"streamingRole": "" // ID of role for streaming users to be given
 }
 ```
-The bot components can be: functionality, utility, wiki, moderation, src, streams, bootcamp. **Never disable the functionality component.**
+The bot components can be: functionality, utility, wiki, moderation, src, streams. **Never disable the functionality component.**
 
 As well, please generate a Discord token, and if using the wiki component, a Wiki.JS API key. These should go into `tokens.json` in the following format:
 ```

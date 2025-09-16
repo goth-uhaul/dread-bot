@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "built"],
+}

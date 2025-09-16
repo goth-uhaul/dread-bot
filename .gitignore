@@ -1,4 +1,5 @@
 node_modules/
+built/
 config.json
 database.sqlite
 tokens.json
