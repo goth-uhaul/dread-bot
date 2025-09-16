@@ -1,9 +1,8 @@
 import axios from "axios";
 import { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, MessageFlags } from "discord.js";
 
+import { BotConfigTable } from "../../databases/db_objects";
 import { Modal } from "../../lib/modal";
-
-import { srcRole } from "../../../config.json";
 
 
 const apiKeyInput = new TextInputBuilder()
@@ -23,6 +22,9 @@ export default new Modal({
         .addComponents(apiKeyInputRow),
     execute: async (interaction) => {
         if (!interaction.inCachedGuild()) return;
+
+        const srcRole = await BotConfigTable.findOne({ where: { id: "srcRole", guild: interaction.guild.id } }).then(x => x?.get("value"));
+        if (!srcRole) throw Error("No SRC role configured.");
 
         const apiKey = interaction.fields.getTextInputValue("apiKeyInput");
 
